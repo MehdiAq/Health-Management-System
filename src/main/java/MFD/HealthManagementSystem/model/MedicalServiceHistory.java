@@ -10,7 +10,7 @@ import java.io.*;
 import java.sql.*;
 
 @Entity
-@Table(name="prescription_history")
+@Table(name="medical_service_history")
 @Getter
 @Setter
 @AllArgsConstructor
