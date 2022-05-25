@@ -16,15 +16,15 @@ import java.util.*;
 @AllArgsConstructor
 @NoArgsConstructor
 public class DoctorAvailability implements Serializable {
-    @Id
-    @Column(name = "date_available")
-    private Date dateAvailable;
-
     @ManyToOne
     @Id
     @JoinColumn(name = "doctor_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Doctor doctor;
+
+    @Id
+    @Column(name = "date_available")
+    private Date dateAvailable;
 
     @Id
     @Column(name = "time_slot")

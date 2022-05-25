@@ -17,15 +17,15 @@ import java.sql.*;
 @AllArgsConstructor
 @NoArgsConstructor
 public class PrescriptionHistory implements Serializable {
-    @Id
-    @Column(name = "medication_id")
-    private Long medicationId;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @Id
     @JoinColumn(name = "health_insurance_number")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Patient patient;
+
+    @Id
+    @Column(name = "medication_id")
+    private Long medicationId;
 
     @Id
     @Column(name = "date_of_prescription")

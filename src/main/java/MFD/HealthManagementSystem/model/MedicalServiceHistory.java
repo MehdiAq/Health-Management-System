@@ -16,15 +16,15 @@ import java.sql.*;
 @AllArgsConstructor
 @NoArgsConstructor
 public class MedicalServiceHistory implements Serializable {
-    @Id
-    @Column(name = "service_name")
-    private String serviceName;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @Id
     @JoinColumn(name = "health_insurance_number")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Patient patient;
+
+    @Id
+    @Column(name = "service_name")
+    private String serviceName;
 
     @Id
     @Column(name = "date_performed")
