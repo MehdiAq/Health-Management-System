@@ -1,5 +1,6 @@
 package MFD.HealthManagementSystem.model;
 
+import MFD.HealthManagementSystem.model.id.*;
 import lombok.*;
 import org.hibernate.annotations.*;
 
@@ -10,12 +11,13 @@ import java.io.*;
 import java.sql.*;
 
 @Entity
+@IdClass(MedicalServiceHistoryId.class)
 @Table(name="medical_service_history")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class MedicalServiceHistory implements Serializable {
+public class MedicalServiceHistory {
     @ManyToOne(fetch = FetchType.LAZY)
     @Id
     @JoinColumn(name = "health_insurance_number")

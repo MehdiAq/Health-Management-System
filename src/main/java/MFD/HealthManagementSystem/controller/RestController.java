@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.*;
 
-@RestController
-public class PatientRestController {
+@org.springframework.web.bind.annotation.RestController
+public class RestController {
 
     @Autowired
     private PatientRepository patientRepository;

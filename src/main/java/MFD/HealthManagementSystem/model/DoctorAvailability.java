@@ -1,21 +1,22 @@
 package MFD.HealthManagementSystem.model;
 
+import MFD.HealthManagementSystem.model.id.*;
 import lombok.*;
 import org.hibernate.annotations.*;
 
 import javax.persistence.*;
 import javax.persistence.Entity;
 import javax.persistence.Table;
-import java.io.*;
 import java.util.*;
 
 @Entity
+@IdClass(DoctorAvailabilityId.class)
 @Table(name="doctor_availability")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class DoctorAvailability implements Serializable {
+public class DoctorAvailability {
     @ManyToOne
     @Id
     @JoinColumn(name = "doctor_id")

@@ -26,7 +26,7 @@ public class AppointmentController {
 
     @GetMapping("/patients/{patientInsuranceNumber}/appointments")
     public Page<Appointment> getAllAppointmentsByInsuranceNumber(@PathVariable(value="patientInsuranceNumber") Long healthInsuranceNumber, Pageable pageable){
-        return appointmentRepository.findByAppointmentId(healthInsuranceNumber, pageable);
+        return appointmentRepository.findByPatient_HealthInsuranceNumber(healthInsuranceNumber, pageable);
     }
 
     @PostMapping("/patients/{patientInsuranceNumber}/appointments")

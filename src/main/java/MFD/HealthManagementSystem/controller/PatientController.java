@@ -1,5 +1,6 @@
 package MFD.HealthManagementSystem.controller;
 
+import MFD.HealthManagementSystem.exception.*;
 import MFD.HealthManagementSystem.model.*;
 import MFD.HealthManagementSystem.repository.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -41,6 +42,19 @@ public class PatientController {
         }
         patientRepository.save(savePatient);
 
+        return "redirect:/";
+    }
+
+    @GetMapping("/updateForm/{id}")
+    public String updateForm(@PathVariable(value = "id") long id, Model model) throws RecordNotFoundException {
+        Patient dbPatient = patientRepository.getReferenceById(id);
+        model.addAttribute("patient", dbPatient);
+        return "update-employee";
+    }
+
+    @GetMapping("/deletePatient/{id}")
+    public String deleteWithId(@PathVariable(value = "id") long id){
+        patientRepository.deleteById(id);
         return "redirect:/";
     }
 
