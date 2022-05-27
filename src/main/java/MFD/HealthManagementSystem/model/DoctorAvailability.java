@@ -1,6 +1,7 @@
 
 package MFD.HealthManagementSystem.model;
 
+import MFD.HealthManagementSystem.model.id.DoctorAvailabilityId;
 import lombok.*;
 import org.hibernate.annotations.*;
 
@@ -16,20 +17,15 @@ import java.util.*;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class DoctorAvailability implements Serializable {
+public class DoctorAvailability{
+
+    @EmbeddedId
+    private DoctorAvailabilityId id;
+
     @ManyToOne
-    @Id
-    @JoinColumn(name = "doctor_id")
+    @MapsId("doctor_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Doctor doctor;
-
-    @Id
-    @Column(name = "date_available")
-    private Date dateAvailable;
-
-    @Id
-    @Column(name = "time_slot")
-    private Date timeSlot;
 
     @Column(name = "is_available")
     private boolean isAvailable;

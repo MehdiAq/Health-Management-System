@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Registration</title>
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+          crossorigin="anonymous">
+</head>
+<body>
+
+<!-- create navigation bar ( header) -->
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed"
+                    data-toggle="collapse" data-target="#navbar" aria-expanded="false"
+                    aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span> <span
+                    class="icon-bar"></span> <span class="icon-bar"></span> <span
+                    class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#" th:href="@{/}">Registration and
+                Login Module</a>
+        </div>
+    </div>
+</nav>
+
+<br>
+<br>
+<!-- Create HTML registration form -->
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+
+            <!-- success message -->
+            <div th:if="${param.success}">
+                <div class="alert alert-info">You've successfully registered</div>
+            </div>
+
+            <h1>Registration</h1>
+
+            <form th:action="@{/registration}" method="post" th:object="${patient}">
+                <div class="form-group">
+                    <input type="text" th:field="*{first_name}" placeholder="Enter first name" class="form-control mb-4 col-4"/>
+                    <p th:if="${#fields.hasErrors('first_name')}" th:errorclass="error" th:errors="*{first_name}"></p>
+                </div>
+
+                <div class="form-group">
+                    <input type="text" th:field="*{last_name}" placeholder="Enter last name" class="form-control mb-4 col-4">
+                    <p th:if="${#fields.hasErrors('last_name')}" th:errorclass="error" th:errors="*{last_name}"></p>
+                </div>
+
+                <div class="form-group">
+                    <input type="number" th:field="*{id}" placeholder="Enter Health Insurance Number" class="form-control mb-4 col-4"/>
+                    <p th:if="${#fields.hasErrors('id')}" th:errorclass="error" th:errors="*{id}"></p>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label" for="password"> Password </label> <input
+                        id="password" class="form-control" type="password"
+                        th:field="*{password}" required autofocus="autofocus" />
+                </div>
+
+                <div class="form-group">
+                    <input type="date" th:field="*{health_card_expiration_date}" placeholder="Enter Card Expiration" class="form-control mb-4 col-4">
+                    <p th:if="${#fields.hasErrors('health_card_expiration_date')}" th:errorclass="error" th:errors="*{health_card_expiration_date}"></p>
+                </div>
+
+                <div class="form-group">
+                    <input type="text" th:field="*{address}" placeholder="Enter address" class="form-control mb-4 col-4">
+                    <p th:if="${#fields.hasErrors('address')}" th:errorclass="error" th:errors="*{address}"></p>
+                </div>
+
+                <div class="form-group">
+                    <input type="date" th:field="*{year_of_birth}" placeholder="Enter birth date" class="form-control mb-4 col-4">
+                    <p th:if="${#fields.hasErrors('year_of_birth')}" th:errorclass="error" th:errors="*{year_of_birth}"></p>
+                </div>
+
+                <div class="form-group">
+                    <input type="email" th:field="*{email}" placeholder="Enter email" class="form-control mb-4 col-4">
+                    <p th:if="${#fields.hasErrors('email')}" th:errorclass="error" th:errors="*{email}"></p>
+                </div>
+
+                <div class="form-group">
+                    <input type="text" th:field="*{cellphone}" placeholder="Enter phone number" class="form-control mb-4 col-4">
+                    <p th:if="${#fields.hasErrors('cellphone')}" th:errorclass="error" th:errors="*{cellphone}"></p>
+                </div>
+
+                <div class="form-group">
+                    <input type="text" th:field="*{family_doctor}" placeholder="Enter family doctor" class="form-control mb-4 col-4">
+                    <p th:if="${#fields.hasErrors('family_doctor')}" th:errorclass="error" th:errors="*{family_doctor}"></p>
+                </div>
+
+                <div class="form-group">
+                    <button type="submit" class="btn btn-success">Register</button>
+                    <span>Already registered? <a href="/" th:href="@{/login}">Login
+								here</a></span>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

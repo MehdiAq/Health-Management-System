@@ -1,35 +1,40 @@
 package MFD.HealthManagementSystem.model;
 
-import com.sun.istack.NotNull;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+
 import javax.persistence.*;
-import java.sql.Time;
+import java.time.LocalTime;
 import java.util.Date;
 
 @Entity
 @Table(name="appointments")
 @Getter
 @Setter
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 public class Appointment {
 
     @Id
     @Column(name = "appointment_id")
-    private String id;
+    private Long appointmentId;
 
-    @NotNull
+    @Column(name = "doctor_id")
+    private Long doctorId;
+
     @Column(name = "date_of_appointment")
-    private Date appointment_date;
+    @JsonFormat(pattern="dd MMMM yyyy")
+    private Date appointmentDate;
 
-    @NotNull
     @Column(name = "time_of_appointment")
-    private Date appointment_time;
+    @JsonFormat(pattern="HH:mm")
+    private LocalTime appointmentTime;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "health_insurance_number")

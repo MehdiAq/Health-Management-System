@@ -17,7 +17,7 @@ public class ErrorMessage {
     public static final String ADDRESS_IS_REQUIRED_ERROR_MESSAGE = "Legitimate address required";
 
     public static final String BIRTH_DATE_IS_REQUIRED_ERROR_MESSAGE = "Indicating birth date is mandatory";
-
+    public static final String PASSWORD_REQUIRED_ERROR_MESSAGE = "Please provide a password";
 
     public static final String PHONE_NUMBER_IS_REQUIRED_ERROR_MESSAGE = "Phone number is required";
 
