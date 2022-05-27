@@ -6,9 +6,8 @@ import java.io.*;
 import java.sql.*;
 
 public class PrescriptionHistoryId implements Serializable {
-    private Patient patient;
 
-    private Long medicationId;
+    private String medicationName;
 
     private Date dateOfPrescription;
 
@@ -17,9 +16,8 @@ public class PrescriptionHistoryId implements Serializable {
     public PrescriptionHistoryId() {
     }
 
-    public PrescriptionHistoryId(Patient patient, Long medicationId, Date dateOfPrescription, Long prescriptionQty) {
-        this.patient = patient;
-        this.medicationId = medicationId;
+    public PrescriptionHistoryId(String medicationName, Date dateOfPrescription, Long prescriptionQty) {
+        this.medicationName = medicationName;
         this.dateOfPrescription = dateOfPrescription;
         this.prescriptionQty = prescriptionQty;
     }

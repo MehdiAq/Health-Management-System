@@ -6,22 +6,20 @@ import java.io.*;
 import java.sql.*;
 
 public class MedicalServiceHistoryId implements Serializable {
-    private Patient patient;
+
 
     private String serviceName;
 
-    private Date date;
+    private Date serviceDate;
 
-    private Doctor doctor;
+
 
     public MedicalServiceHistoryId() {
     }
 
-    public MedicalServiceHistoryId(Patient patient, String serviceName, Date date, Doctor doctor) {
-        this.patient = patient;
+    public MedicalServiceHistoryId(String serviceName, Date serviceDate) {
         this.serviceName = serviceName;
-        this.date = date;
-        this.doctor = doctor;
+        this.serviceDate = serviceDate;
     }
 
     @Override

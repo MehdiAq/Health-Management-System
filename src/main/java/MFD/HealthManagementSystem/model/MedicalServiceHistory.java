@@ -30,9 +30,9 @@ public class MedicalServiceHistory {
 
     @Id
     @Column(name = "date_performed")
-    private Date date;
+    private Date serviceDate;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "doctor_id")
     @OnDelete(action = OnDeleteAction.NO_ACTION)
     private Doctor doctor;

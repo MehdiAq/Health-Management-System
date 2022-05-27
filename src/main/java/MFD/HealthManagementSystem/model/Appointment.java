@@ -27,9 +27,10 @@ public class Appointment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long appointmentId;
 
-    @NotNull
-    @Column(name = "doctor_id")
-    private Long doctorId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "doctor_id")
+    @OnDelete(action = OnDeleteAction.NO_ACTION)
+    private Doctor doctor;
 
     @Column(name = "date_of_appointment")
     private Date appointmentDate;

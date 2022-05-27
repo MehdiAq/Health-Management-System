@@ -26,8 +26,8 @@ public class PrescriptionHistory {
     private Patient patient;
 
     @Id
-    @Column(name = "medication_id")
-    private Long medicationId;
+    @Column(name = "medication_name")
+    private String medicationName;
 
     @Id
     @Column(name = "date_of_prescription")
