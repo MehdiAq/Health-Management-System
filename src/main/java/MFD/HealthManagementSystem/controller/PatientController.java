@@ -49,7 +49,7 @@ public class PatientController {
     public String updateForm(@PathVariable(value = "id") long id, Model model) throws RecordNotFoundException {
         Patient dbPatient = patientRepository.getReferenceById(id);
         model.addAttribute("patient", dbPatient);
-        return "update-employee";
+        return "update-patient";
     }
 
     @GetMapping("/deletePatient/{id}")

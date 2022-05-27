@@ -12,6 +12,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 public class Doctor {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "doctor_id")
     private Long doctorId;
 
@@ -25,7 +26,7 @@ public class Doctor {
     private String address;
 
     @Column(name = "cellphone")
-    private Long cellphone;
+    private String cellphone;
 
     @Column(name = "specialty")
     private String specialty;

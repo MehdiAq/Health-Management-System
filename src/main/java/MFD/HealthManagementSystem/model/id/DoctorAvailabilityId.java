@@ -6,7 +6,7 @@ import java.io.*;
 import java.util.Date;
 
 public class DoctorAvailabilityId implements Serializable {
-    private Doctor doctor;
+
 
     private Date dateAvailable;
 
@@ -17,8 +17,8 @@ public class DoctorAvailabilityId implements Serializable {
     public DoctorAvailabilityId() {
     }
 
-    public DoctorAvailabilityId(Doctor doctor, Date dateAvailable, Date timeSlot, boolean isAvailable) {
-        this.doctor = doctor;
+    public DoctorAvailabilityId(Date dateAvailable, Date timeSlot, boolean isAvailable) {
+
         this.dateAvailable = dateAvailable;
         this.timeSlot = timeSlot;
         this.isAvailable = isAvailable;
