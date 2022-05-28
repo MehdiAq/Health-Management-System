@@ -2,9 +2,8 @@ package MFD.HealthManagementSystem.controller;
 
 import MFD.HealthManagementSystem.exception.*;
 import MFD.HealthManagementSystem.model.*;
-import MFD.HealthManagementSystem.repository.*;
+import MFD.HealthManagementSystem.service.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.beans.factory.annotation.*;
 import org.springframework.stereotype.*;
 import org.springframework.ui.*;
 import org.springframework.validation.*;
@@ -16,17 +15,23 @@ import java.util.*;
 @Controller
 public class PatientController {
 
-    @Autowired
-    private PatientRepository patientRepository;
+    private final PatientService patientService;
 
     private final ObjectMapper mapper = new ObjectMapper();
 
+    public PatientController(PatientService patientService) {
+        this.patientService = patientService;
+    }
     @GetMapping("/")
-    public String homePage(Model model){
-        List<Patient> patientList = patientRepository.findAll();
+    public String viewHomePage(Model model){
+        List<Patient> patientList = patientService.getPatientList();
+//        List<PatientOutput> result = patientList.stream().map(
+//                        data-> mapper.convertValue(data, PatientOutput.class)).
+//                collect(Collectors.toList());
         model.addAttribute("allPatients", patientList);
         return "index";
     }
+
 
     @GetMapping("/addNew")
     public String addNewPatient(Model model){
@@ -35,27 +40,33 @@ public class PatientController {
         return "new-patient";
     }
 
+    @GetMapping("/db")
+    public String goToDashboard(){
+        return "dashboard";
+    }
+
     @PostMapping("/save")
     public String savePatient(@Valid @ModelAttribute("patient") Patient savePatient, BindingResult result){
         if (result.hasErrors()){
             return "new-patient";
         }
-        patientRepository.save(savePatient);
+        patientService.saveOrUpdatePatient(savePatient);
 
         return "redirect:/";
     }
 
     @GetMapping("/updateForm/{id}")
-    public String updateForm(@PathVariable(value = "id") long id, Model model) throws RecordNotFoundException {
-        Patient dbPatient = patientRepository.getReferenceById(id);
+    public String updateForm(@PathVariable(value = "id") Long id, Model model) throws RecordNotFoundException {
+        Patient dbPatient = patientService.getPatientById(id);
         model.addAttribute("patient", dbPatient);
         return "update-patient";
     }
 
     @GetMapping("/deletePatient/{id}")
     public String deleteWithId(@PathVariable(value = "id") long id){
-        patientRepository.deleteById(id);
+        patientService.deletePatient(id);
         return "redirect:/";
     }
+
 
 }
