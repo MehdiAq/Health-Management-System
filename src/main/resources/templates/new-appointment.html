@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Dashboard</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+          crossorigin="anonymous">
+    <style>
+        html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
+    </style>
+</head>
+<body class="w3-light-grey">
+
+<!-- Top container -->
+<div class="w3-bar w3-top w3-black w3-large" style="z-index:4">
+    <button class="w3-bar-item w3-button w3-hide-large w3-hover-none w3-hover-text-light-grey" onclick="w3_open();"><i class="fa fa-bars"></i>  Menu</button>
+    <span class="w3-bar-item w3-right">Logo</span>
+</div>
+
+<!-- !PAGE CONTENT! -->
+<div class="w3-main" style="text-align: center;margin-top:43px;">
+    <div class="container" align="center">
+        <h1 class="pt-3"> Patient Health System</h1>
+        <hr>
+        <h2>Create New Appointment</h2>
+        <form th:action="@{/saveAppointment}" th:object="${appointment}" method="post">
+
+            <input type="text" th:field="*{first_name}" placeholder="Enter first name" class="form-control mb-4 col-4"/>
+            <p th:if="${#fields.hasErrors('first_name')}" th:errorclass="error" th:errors="*{first_name}"></p>
+
+            <input type="text" th:field="*{last_name}" placeholder="Enter last name" class="form-control mb-4 col-4">
+            <p th:if="${#fields.hasErrors('last_name')}" th:errorclass="error" th:errors="*{last_name}"></p>
+
+            <input type="number" th:field="*{id}" placeholder="Enter Health Insurance Number" class="form-control mb-4 col-4"/>
+            <p th:if="${#fields.hasErrors('id')}" th:errorclass="error" th:errors="*{id}"></p>
+
+            <!--    <input type="text" th:field="*{password}" placeholder="Enter password" class="form-control mb-4 col-4"/>-->
+            <!--    <p th:if="${#fields.hasErrors('password')}" th:errorclass="error" th:errors="*{password}"></p>-->
+
+            <input type="date" th:field="*{health_card_expiration_date}" placeholder="Enter Card Expiration" class="form-control mb-4 col-4">
+            <p th:if="${#fields.hasErrors('health_card_expiration_date')}" th:errorclass="error" th:errors="*{health_card_expiration_date}"></p>
+
+            <input type="text" th:field="*{address}" placeholder="Enter address" class="form-control mb-4 col-4">
+            <p th:if="${#fields.hasErrors('address')}" th:errorclass="error" th:errors="*{address}"></p>
+
+            <input type="date" th:field="*{year_of_birth}" placeholder="Enter birth date" class="form-control mb-4 col-4">
+            <p th:if="${#fields.hasErrors('year_of_birth')}" th:errorclass="error" th:errors="*{year_of_birth}"></p>
+
+            <input type="email" th:field="*{email}" placeholder="Enter email" class="form-control mb-4 col-4">
+            <p th:if="${#fields.hasErrors('email')}" th:errorclass="error" th:errors="*{email}"></p>
+
+            <input type="text" th:field="*{cellphone}" placeholder="Enter phone number" class="form-control mb-4 col-4">
+            <p th:if="${#fields.hasErrors('cellphone')}" th:errorclass="error" th:errors="*{cellphone}"></p>
+
+            <input type="text" th:field="*{family_doctor}" placeholder="Enter family doctor" class="form-control mb-4 col-4">
+            <p th:if="${#fields.hasErrors('family_doctor')}" th:errorclass="error" th:errors="*{family_doctor}"></p>
+
+            <!--        <label>Showing all the server errors</label>-->
+            <!--        <ul>-->
+            <!--            <li th:each="err :${#fields.errors()}" th:text="${err}" class="error"></li>-->
+            <!--        </ul>-->
+
+            <button type="submit" class="btn btn-info col-2">Save Patient</button>
+        </form>
+    </div>
+</div>
+</body>
+</html>

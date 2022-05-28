@@ -18,33 +18,33 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import javax.validation.Valid;
 import org.springframework.data.domain.Pageable;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
+
 
 @Controller
 public class PatientController {
 
-    @Autowired
-    private AppointmentRepository appointmentRepository;
+    private final AppointmentService appointmentService;
 
-    final PatientService patientService;
+    private final PatientService patientService;
 
     private final ObjectMapper mapper = new ObjectMapper();
 
-    public PatientController(PatientService patientService) {
+    public PatientController(PatientService patientService, AppointmentService appointmentService) {
         this.patientService = patientService;
+        this.appointmentService = appointmentService;
     }
 
     @GetMapping("/")
     public String viewHomePage(Model model){
         List<Patient> patientList = patientService.getPatientList();
-//        List<PatientOutput> result = patientList.stream().map(
-//                        data-> mapper.convertValue(data, PatientOutput.class)).
-//                collect(Collectors.toList());
         model.addAttribute("allPatients", patientList);
         return "index";
     }
 
-    @GetMapping("/addNew")
+    @GetMapping("/addNewPatient")
     public String addNewPatient(Model model){
         Patient patient = new Patient();
         model.addAttribute("patient", patient);
@@ -52,15 +52,16 @@ public class PatientController {
     }
 
     @GetMapping("/patientDashboard/{id}")
-    public String goToPatientDashboard(@PathVariable(value = "id") Long id, Model model, Pageable pageable) throws RecordNotFoundException{
+    public String goToPatientDashboard(@PathVariable(value = "id") Long id, Model model) throws RecordNotFoundException{
         Patient dbPatient = patientService.getPatientById(id);
-        Page<Appointment> appointments = appointmentRepository.findByPatientId(id, pageable);
+        List<Appointment> upComingAppointments = appointmentService.getUpcomingAppointmentById(id);
+
         model.addAttribute("patient", dbPatient);
-        model.addAttribute("appointments", appointments);
+        model.addAttribute("appointments", upComingAppointments);
         return "dashboard";
     }
 
-    @PostMapping("/save")
+    @PostMapping("/savePatient")
     public String savePatient(@Valid @ModelAttribute("patient") Patient savePatient, BindingResult result){
         if (result.hasErrors()){
             return "new-patient";
@@ -70,8 +71,8 @@ public class PatientController {
         return "redirect:/";
     }
 
-    @GetMapping("/updateForm/{id}")
-    public String updateForm(@PathVariable(value = "id") Long id, Model model) throws RecordNotFoundException {
+    @GetMapping("/updatePatient/{id}")
+    public String updatePatient(@PathVariable(value = "id") Long id, Model model) throws RecordNotFoundException {
         Patient dbPatient = patientService.getPatientById(id);
         model.addAttribute("patient", dbPatient);
         return "update-patient";

@@ -1,6 +1,5 @@
 package MFD.HealthManagementSystem.model;
 
-
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -11,6 +10,7 @@ import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Date;
 
@@ -35,9 +35,9 @@ public class Appointment {
     private Doctor doctor;
 
     @Column(name = "date_of_appointment")
+//    @DateFormat(pattern = "yyyy-MM-dd")
 //    @JsonFormat(pattern="dd MMMM yyyy")
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date appointmentDate;
+    private LocalDate appointmentDate;
 
     @Column(name = "time_of_appointment")
     @JsonFormat(pattern="HH:mm")
