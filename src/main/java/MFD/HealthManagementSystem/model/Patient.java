@@ -9,7 +9,6 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.*;
-import java.time.Year;
 import java.util.Date;
 
 import static MFD.HealthManagementSystem.constant.ErrorMessage.*;

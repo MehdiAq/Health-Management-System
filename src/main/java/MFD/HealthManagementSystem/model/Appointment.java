@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalTime;
@@ -23,13 +24,19 @@ public class Appointment {
 
     @Id
     @Column(name = "appointment_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long appointmentId;
 
-    @Column(name = "doctor_id")
-    private Long doctorId;
+    private String appointmentName;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "doctor_id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private Doctor doctor;
 
     @Column(name = "date_of_appointment")
-    @JsonFormat(pattern="dd MMMM yyyy")
+//    @JsonFormat(pattern="dd MMMM yyyy")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date appointmentDate;
 
     @Column(name = "time_of_appointment")

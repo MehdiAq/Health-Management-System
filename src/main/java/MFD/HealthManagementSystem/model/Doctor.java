@@ -14,6 +14,7 @@ import javax.persistence.*;
 public class Doctor {
     @Id
     @Column(name = "doctor_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long doctorId;
 
     @Column(name = "first_name")

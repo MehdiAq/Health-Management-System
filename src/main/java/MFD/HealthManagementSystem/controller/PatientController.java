@@ -1,9 +1,14 @@
 package MFD.HealthManagementSystem.controller;
 
 import MFD.HealthManagementSystem.exception.RecordNotFoundException;
+import MFD.HealthManagementSystem.model.Appointment;
 import MFD.HealthManagementSystem.model.Patient;
+import MFD.HealthManagementSystem.repository.AppointmentRepository;
+import MFD.HealthManagementSystem.service.AppointmentService;
 import MFD.HealthManagementSystem.service.PatientService;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -12,10 +17,14 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import javax.validation.Valid;
+import org.springframework.data.domain.Pageable;
 import java.util.List;
 
 @Controller
 public class PatientController {
+
+    @Autowired
+    private AppointmentRepository appointmentRepository;
 
     final PatientService patientService;
 
@@ -35,7 +44,6 @@ public class PatientController {
         return "index";
     }
 
-
     @GetMapping("/addNew")
     public String addNewPatient(Model model){
         Patient patient = new Patient();
@@ -43,8 +51,12 @@ public class PatientController {
         return "new-patient";
     }
 
-    @GetMapping("/db")
-    public String goToDashboard(){
+    @GetMapping("/patientDashboard/{id}")
+    public String goToPatientDashboard(@PathVariable(value = "id") Long id, Model model, Pageable pageable) throws RecordNotFoundException{
+        Patient dbPatient = patientService.getPatientById(id);
+        Page<Appointment> appointments = appointmentRepository.findByPatientId(id, pageable);
+        model.addAttribute("patient", dbPatient);
+        model.addAttribute("appointments", appointments);
         return "dashboard";
     }
 

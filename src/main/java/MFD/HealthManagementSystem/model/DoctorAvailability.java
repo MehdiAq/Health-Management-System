@@ -8,8 +8,6 @@ import org.hibernate.annotations.*;
 import javax.persistence.*;
 import javax.persistence.Entity;
 import javax.persistence.Table;
-import java.io.*;
-import java.util.*;
 
 @Entity
 @Table(name="doctor_availability")
@@ -17,7 +15,7 @@ import java.util.*;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class DoctorAvailability{
+public class DoctorAvailability {
 
     @EmbeddedId
     private DoctorAvailabilityId id;
