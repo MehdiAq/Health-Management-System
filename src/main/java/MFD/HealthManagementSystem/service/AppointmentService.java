@@ -26,14 +26,14 @@ public class AppointmentService {
         return result;
     }
 
-    public List<Appointment> getDoctorAppointments(long id, Pageable pageable) {
-        Page<Appointment> fetchData = appointmentRepository.findByDoctor_Id(id, pageable);
+    public List<Appointment> getDoctorAppointments(long id) {
+        List<Appointment> fetchData = appointmentRepository.findAllByDoctor_Id(id);
         var result = mapper.convertValue(fetchData, List.class);
         return result;
     }
 
-    public List<Appointment> getPatientAppointments(long id, Pageable pageable) {
-        Page<Appointment> fetchData = appointmentRepository.findByPatient_HealthInsuranceNumber(id, pageable);
+    public List<Appointment> getPatientAppointments(long id) {
+        List<Appointment> fetchData = appointmentRepository.findAllByPatient_HealthInsuranceNumber(id);
         var result = mapper.convertValue(fetchData, List.class);
         return result;
     }

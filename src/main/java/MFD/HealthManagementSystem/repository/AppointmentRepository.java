@@ -8,8 +8,8 @@ import java.sql.Date;
 import java.util.*;
 
 public interface AppointmentRepository extends JpaRepository<Appointment, Long> {
-    Page<Appointment> findByPatient_HealthInsuranceNumber(Long healthInsuranceNumber, Pageable pageable);
-    Page<Appointment> findByDoctor_Id(Long id, Pageable pageable);
+    List<Appointment> findAllByPatient_HealthInsuranceNumber(Long healthInsuranceNumber);
+    List<Appointment> findAllByDoctor_Id(Long id);
     Appointment findAppointmentByDoctorAndAppointmentDateAndAppointmentTime(Doctor doctor, Date date, java.util.Date time);
 //    Optional<Appointment> findByInsuranceAndAppointmentId(Long id, Long appointmentId);
 }

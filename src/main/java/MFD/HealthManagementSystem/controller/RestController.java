@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.*;
+import java.util.*;
 
 @org.springframework.web.bind.annotation.RestController
 public class RestController {
@@ -46,8 +47,8 @@ public class RestController {
     }
 
     @GetMapping("/patients/{patientInsuranceNumber}/appointments")
-    public Page<Appointment> getAllAppointmentsByInsuranceNumber(@PathVariable(value="patientInsuranceNumber") Long healthInsuranceNumber, Pageable pageable){
-        return appointmentRepository.findByPatient_HealthInsuranceNumber(healthInsuranceNumber, pageable);
+    public List<Appointment> getAllAppointmentsByInsuranceNumber(@PathVariable(value="patientInsuranceNumber") Long healthInsuranceNumber){
+        return appointmentRepository.findAllByPatient_HealthInsuranceNumber(healthInsuranceNumber);
     }
 
     @PostMapping("/patients/{patientInsuranceNumber}/{doctorId}/appointments")

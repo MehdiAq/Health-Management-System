@@ -29,15 +29,15 @@ public class AppointmentController {
     }
 
     @GetMapping("/appointments/{doctorId}/list")
-    public String viewDoctorAppointments(@PathVariable(value = "doctorId")Long id, Model model, Pageable pageable){
-        List<Appointment> appointmentsList = appointmentService.getDoctorAppointments(id, pageable);
+    public String viewDoctorAppointments(@PathVariable(value = "doctorId")Long id, Model model){
+        List<Appointment> appointmentsList = appointmentService.getDoctorAppointments(id);
         model.addAttribute("appointments", appointmentsList);
         return "appointments/list";
     }
 
     @GetMapping("/appointments/{insuranceNumber}/list")
-    public String viewPatientAppointments(@PathVariable(value = "insuranceNumber")Long id, Model model, Pageable pageable){
-        List<Appointment> appointmentsList = appointmentService.getPatientAppointments(id, pageable);
+    public String viewPatientAppointments(@PathVariable(value = "insuranceNumber")Long id, Model model){
+        List<Appointment> appointmentsList = appointmentService.getPatientAppointments(id);
         model.addAttribute("appointments", appointmentsList);
         return "appointments/list";
     }
