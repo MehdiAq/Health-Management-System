@@ -25,7 +25,7 @@ public class Patient {
     @NotNull(message = HEALTH_INSURANCE_NUMBER_IS_REQUIRED_ERROR_MESSAGE)
     @Column(name = "health_insurance_number")
     @Positive
-    private Long id;
+    private Long healthInsuranceNumber;
 
     @NotNull
     @Column(name = "first_name")

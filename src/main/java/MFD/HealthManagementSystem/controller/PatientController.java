@@ -22,6 +22,7 @@ public class PatientController {
     public PatientController(PatientService patientService) {
         this.patientService = patientService;
     }
+
     @GetMapping("/")
     public String viewHomePage(Model model){
         List<Patient> patientList = patientService.getPatientList();

@@ -33,7 +33,7 @@ public class PatientService {
             return mapper.convertValue(patient.get(), Patient.class);
         }
         else{
-            throw new RecordNotFoundException("There is no employee");
+            throw new RecordNotFoundException("Patient with ID: " + id +" not found");
         }
     }
 

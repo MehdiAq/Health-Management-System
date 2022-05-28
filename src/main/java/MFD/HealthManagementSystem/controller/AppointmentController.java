@@ -1,42 +1,73 @@
 package MFD.HealthManagementSystem.controller;
 
-import MFD.HealthManagementSystem.exception.ResourceNotFoundException;
-import MFD.HealthManagementSystem.model.Appointment;
-import MFD.HealthManagementSystem.repository.AppointmentRepository;
-import MFD.HealthManagementSystem.repository.PatientRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import MFD.HealthManagementSystem.exception.*;
+import MFD.HealthManagementSystem.model.*;
+import MFD.HealthManagementSystem.service.*;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.*;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-
+import org.springframework.ui.*;
+import org.springframework.validation.*;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.*;
+import java.util.*;
 
 @Controller
 public class AppointmentController {
 
-    @Autowired
-    private AppointmentRepository appointmentRepository;
+    private final AppointmentService appointmentService;
 
-    @Autowired
-    private PatientRepository patientRepository;
+    public AppointmentController(AppointmentService appointmentService) {
+        this.appointmentService = appointmentService;
+    }
 
-//    @GetMapping("/patients/{patientInsuranceNumber}/appointments")
-//    public Page<Appointment> getAllAppointmentsByInsuranceNumber(@PathVariable(value="patientInsuranceNumber") Long healthInsuranceNumber, Pageable pageable){
-//        return appointmentRepository.findByPatient_HealthInsuranceNumber(healthInsuranceNumber, pageable);
-//    }
-//
-//    @PostMapping("/patients/{patientInsuranceNumber}/appointments")
-//    public Appointment createAppointment(@PathVariable(value = "patientInsuranceNumber") Long healthInsuranceNumber, @Valid @RequestBody Appointment appointment){
-//        return patientRepository.findById(healthInsuranceNumber).map(patient -> {
-//            appointment.setPatient(patient);
-//            return appointmentRepository.save(appointment);
-//        }).orElseThrow(()-> new ResourceNotFoundException("Patient Health Insurance Number " + healthInsuranceNumber + " not found"));
-//    }
+    @GetMapping("/appointments/list")
+    public String viewAppointments(Model model){
+        List<Appointment> appointmentsList = appointmentService.getAppointmentList();
+        model.addAttribute("appointments", appointmentsList);
+        return "appointments/list";
+    }
 
+    @GetMapping("/appointments/{doctorId}/list")
+    public String viewDoctorAppointments(@PathVariable(value = "doctorId")Long id, Model model, Pageable pageable){
+        List<Appointment> appointmentsList = appointmentService.getDoctorAppointments(id, pageable);
+        model.addAttribute("appointments", appointmentsList);
+        return "appointments/list";
+    }
 
+    @GetMapping("/appointments/{insuranceNumber}/list")
+    public String viewPatientAppointments(@PathVariable(value = "insuranceNumber")Long id, Model model, Pageable pageable){
+        List<Appointment> appointmentsList = appointmentService.getPatientAppointments(id, pageable);
+        model.addAttribute("appointments", appointmentsList);
+        return "appointments/list";
+    }
+
+    @GetMapping("/appointments/new")
+    public String addNewAppointment(Model model){
+        Appointment appointment = new Appointment();
+        model.addAttribute("appointment", appointment);
+        return "new-appointment";
+    }
+
+    @PostMapping("/appointments/save")
+    public String saveAppointment(@Valid @ModelAttribute("appointment") Appointment saveAppointment, BindingResult result) throws RecordAlreadyExistsException{
+        if (result.hasErrors()){
+            return "new-appointment";
+        }
+        appointmentService.saveOrUpdateAppointment(saveAppointment);
+        return "redirect:/appointments/list";
+    }
+
+    @GetMapping("/appointments/update/{id}")
+    public String updateAppointment(@PathVariable(value = "id") Long id, Model model) throws RecordNotFoundException {
+        Appointment dbAppointment = appointmentService.getAppointmentById(id);
+        model.addAttribute("appointment", dbAppointment);
+        return "update-appointment";
+    }
+
+    @GetMapping("/appointments/delete/{id}")
+    public String deleteAppointmentWithId(@PathVariable(value = "id") long id){
+        appointmentService.deleteAppointment(id);
+        return "redirect:/appointments/list";
+    }
 }
