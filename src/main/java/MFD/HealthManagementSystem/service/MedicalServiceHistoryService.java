@@ -74,10 +74,10 @@ public class MedicalServiceHistoryService {
     }
 
     public List<MedicalServiceHistory> getDoctorMedicalServiceHistoryServiceList(long id) throws RecordNotFoundException {
-        if(repository.findMedicalServiceHistoriesByDoctor_Id(id).isEmpty()){
+        if(repository.findMedicalServiceHistoriesByDoctor_DoctorId(id).isEmpty()){
             throw new RecordNotFoundException("No such Medical Service History Exists --- Doctor ID: " + id);
         }
-        return repository.findMedicalServiceHistoriesByDoctor_Id(id);
+        return repository.findMedicalServiceHistoriesByDoctor_DoctorId(id);
     }
 
     public List<MedicalServiceHistory> getServiceMedicalServiceHistoryServiceList(String name) throws RecordNotFoundException {

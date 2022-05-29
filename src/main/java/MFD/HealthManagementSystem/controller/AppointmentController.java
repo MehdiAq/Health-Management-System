@@ -2,23 +2,25 @@ package MFD.HealthManagementSystem.controller;
 
 import MFD.HealthManagementSystem.exception.*;
 import MFD.HealthManagementSystem.model.*;
+import MFD.HealthManagementSystem.repository.*;
 import MFD.HealthManagementSystem.service.*;
-import org.springframework.data.domain.*;
 import org.springframework.stereotype.*;
 import org.springframework.ui.*;
 import org.springframework.validation.*;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.*;
-import java.sql.Date;
 import java.util.*;
 
 @Controller
 public class AppointmentController {
 
+    private final DoctorRepository doctorRepository;
+
     private final AppointmentService appointmentService;
 
-    public AppointmentController(AppointmentService appointmentService) {
+    public AppointmentController(DoctorRepository doctorRepository, AppointmentService appointmentService) {
+        this.doctorRepository = doctorRepository;
         this.appointmentService = appointmentService;
     }
 
@@ -43,16 +45,18 @@ public class AppointmentController {
         return "appointments-list";
     }
 
-    @GetMapping("/appointments/{date}/list")
-    public String viewPatientAppointments(@PathVariable(value = "date") Date date, Model model){
-        List<Appointment> appointmentsList = appointmentService.getAppointmentListByDate(date);
-        model.addAttribute("appointments", appointmentsList);
-        return "appointments-list";
-    }
+//    @GetMapping("/appointments/{date}/list")
+//    public String viewPatientAppointments(@PathVariable(value = "date") Date date, Model model){
+//        List<Appointment> appointmentsList = appointmentService.getAppointmentListByDate(date);
+//        model.addAttribute("appointments", appointmentsList);
+//        return "appointments-list";
+//    }
 
     @GetMapping("/appointments/new")
     public String addNewAppointment(Model model){
         Appointment appointment = new Appointment();
+        List<Doctor> allDoctors = doctorRepository.findAll();
+        model.addAttribute("allDoctors", allDoctors);
         model.addAttribute("appointment", appointment);
         return "new-appointment";
     }

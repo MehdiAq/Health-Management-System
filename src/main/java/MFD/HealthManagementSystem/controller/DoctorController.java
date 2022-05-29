@@ -27,12 +27,12 @@ public class DoctorController {
         return "doctors";
     }
 
-    @GetMapping("/doctors/{name}/list")
-    public String viewDoctorsByName(@PathVariable(value = "name")String name, Model model) throws RecordNotFoundException {
-        List<Doctor> doctorList = doctorService.getDoctorListByName(name);
-        model.addAttribute("allDoctors", doctorList);
-        return "doctors";
-    }
+//    @GetMapping("/doctors/{name}/list")
+//    public String viewDoctorsByName(@PathVariable(value = "name")String name, Model model) throws RecordNotFoundException {
+//        List<Doctor> doctorList = doctorService.getDoctorListByName(name);
+//        model.addAttribute("allDoctors", doctorList);
+//        return "doctors";
+//    }
 
     @GetMapping("/doctors/{specialty}/list")
     public String viewDoctorsBySpecialty(@PathVariable(value = "specialty")String specialty, Model model) throws RecordNotFoundException {

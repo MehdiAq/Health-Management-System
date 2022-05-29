@@ -14,7 +14,7 @@ public interface MedicalServiceHistoryRepository extends JpaRepository<MedicalSe
     void deleteMedicalServiceHistoryByPatient_HealthInsuranceNumberAndServiceNameAndServiceDate(long healthInsuranceNumber, String serviceName, Date date);
     MedicalServiceHistory findMedicalServiceHistoryByPatient_HealthInsuranceNumberAndServiceNameAndServiceDate(long healthInsuranceNumber, String serviceName, Date date);
     List<MedicalServiceHistory> findMedicalServiceHistoriesByPatient_HealthInsuranceNumber(long healthInsuranceNumber);
-    List<MedicalServiceHistory> findMedicalServiceHistoriesByDoctor_Id(long doctorId);
+    List<MedicalServiceHistory> findMedicalServiceHistoriesByDoctor_DoctorId(long doctorId);
     List<MedicalServiceHistory> findMedicalServiceHistoriesByServiceName(String serviceName);
     List<MedicalServiceHistory> findMedicalServiceHistoriesByServiceDate(Date date);
 }

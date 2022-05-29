@@ -17,10 +17,13 @@ public class PatientController {
 
     private final PatientService patientService;
 
+    private final AppointmentService appointmentService;
+
     private final ObjectMapper mapper = new ObjectMapper();
 
-    public PatientController(PatientService patientService) {
+    public PatientController(PatientService patientService, AppointmentService appointmentService) {
         this.patientService = patientService;
+        this.appointmentService = appointmentService;
     }
 
     @GetMapping("/")
@@ -31,15 +34,20 @@ public class PatientController {
     }
 
 
-    @GetMapping("/addNew")
+    @GetMapping("/addNewPatient")
     public String addNewPatient(Model model){
         Patient patient = new Patient();
         model.addAttribute("patient", patient);
         return "new-patient";
     }
 
-    @GetMapping("/db")
-    public String goToDashboard(){
+    @GetMapping("/patientDashboard/{id}")
+    public String goToPatientDashboard(@PathVariable(value = "id") Long id, Model model) throws RecordNotFoundException{
+        Patient dbPatient = patientService.getPatientById(id);
+        List<Appointment> upComingAppointments = appointmentService.getUpcomingAppointmentById(id);
+
+        model.addAttribute("patient", dbPatient);
+        model.addAttribute("appointments", upComingAppointments);
         return "dashboard";
     }
 

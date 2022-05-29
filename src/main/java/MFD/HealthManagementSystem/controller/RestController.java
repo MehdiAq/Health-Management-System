@@ -24,8 +24,8 @@ public class RestController {
     @Autowired
     private AppointmentRepository appointmentRepository;
 
-    @Autowired
-    private DoctorAvailabilityRepository doctorAvailabilityRepository;
+//    @Autowired
+//    private DoctorAvailabilityRepository doctorAvailabilityRepository;
 
     @Autowired
     private MedicalServiceHistoryRepository medicalServiceHistoryRepository;
@@ -58,12 +58,12 @@ public class RestController {
         return appointmentRepository.save(appointment);
     }
 
-    @PostMapping("/doctors/{doctor_Id}/createAvailability")
-    public DoctorAvailability createDocAvail(@PathVariable(value = "doctor_Id") Long doctorId, @RequestBody DoctorAvailability doctorAvailability) {
-
-        doctorAvailability.setDoctor(doctorRepository.findById(doctorId).orElseThrow(()-> new ResourceNotFoundException("")));
-        return doctorAvailabilityRepository.save(doctorAvailability);
-    }
+//    @PostMapping("/doctors/{doctor_Id}/createAvailability")
+//    public DoctorAvailability createDocAvail(@PathVariable(value = "doctor_Id") Long doctorId, @RequestBody DoctorAvailability doctorAvailability) {
+//
+//        doctorAvailability.setDoctor(doctorRepository.findById(doctorId).orElseThrow(()-> new ResourceNotFoundException("")));
+//        return doctorAvailabilityRepository.save(doctorAvailability);
+//    }
 
     @PostMapping("/patients/{insuranceNumber}/prescription/")
     public PrescriptionHistory recordPrescription(@PathVariable(value = "insuranceNumber") long healthInsuranceNumber, @RequestBody PrescriptionHistory prescriptionHistory) {

@@ -27,7 +27,6 @@ public class Doctor {
     private String address;
 
     @Column(name = "cellphone")
-    @UniqueElements
     private String cellphone;
 
     @Column(name = "specialty")

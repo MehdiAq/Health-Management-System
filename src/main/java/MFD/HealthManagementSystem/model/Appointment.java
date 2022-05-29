@@ -12,8 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
-import java.sql.Date;
+import java.time.*;
 
 @Entity
 @Table(name="appointments")
@@ -21,7 +20,9 @@ import java.sql.Date;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode
 public class Appointment {
+
     @Id
     @Column(name = "appointment_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,10 +34,13 @@ public class Appointment {
     private Doctor doctor;
 
     @Column(name = "date_of_appointment")
-    private Date appointmentDate;
+    private LocalDate appointmentDate;
 
     @Column(name = "time_of_appointment")
-    private TimeSlots timeSlots;
+    private TimeSlot timeSlot;
+
+    @Column(name = "procedure_name")
+    private Procedure procedure;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "health_insurance_number")

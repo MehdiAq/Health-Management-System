@@ -36,15 +36,15 @@ public class DoctorService {
     }
 
     public Doctor saveOrUpdateDoctor(Doctor doctor){
-        if(doctor.getId() == null){
+        if(doctor.getDoctorId() == null){
             doctorRepository.save(doctor);
             return doctor;
         }
         else{
-            Optional<Doctor> doctor1 = doctorRepository.findById(doctor.getId());
+            Optional<Doctor> doctor1 = doctorRepository.findById(doctor.getDoctorId());
             if (doctor1.isPresent()) {
                 Doctor doctor2 = doctor1.get();
-                doctor2.setId(doctor.getId());
+                doctor2.setDoctorId(doctor.getDoctorId());
                 doctor2.setFirstName(doctor.getFirstName());
                 doctor2.setLastName(doctor.getLastName());
                 doctor2.setAddress(doctor.getAddress());
@@ -65,12 +65,12 @@ public class DoctorService {
         doctorRepository.deleteById(doctorId);
     }
 
-    public List<Doctor> getDoctorListByName(String name) throws RecordNotFoundException{
-        if(doctorRepository.findDoctorsByFirstNameContainsOrLastNameContains(name).isEmpty()) {
-            throw new RecordNotFoundException("No Doctors with name containing: " + name);
-        }
-        return doctorRepository.findDoctorsByFirstNameContainsOrLastNameContains(name);
-    }
+//    public List<Doctor> getDoctorListByName(String name) throws RecordNotFoundException{
+//        if(doctorRepository.findDoctorsByFirstNameContainsOrLastNameContains(name).isEmpty()) {
+//            throw new RecordNotFoundException("No Doctors with name containing: " + name);
+//        }
+//        return doctorRepository.findDoctorsByFirstNameContainsOrLastNameContains(name);
+//    }
 
     public List<Doctor> getDoctorListBySpecialty(String specialty) throws RecordNotFoundException{
         if(doctorRepository.findDoctorsBySpecialty(specialty).isEmpty()) {

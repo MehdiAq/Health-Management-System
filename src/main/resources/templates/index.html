@@ -118,18 +118,18 @@
             </tr>
             </thead>
             <tr th:each="pat:${allPatients}">
-                <td th:text="${pat.first_name}"></td>
-                <td th:text="${pat.last_name}"></td>
+                <td th:text="${pat.firstName}"></td>
+                <td th:text="${pat.lastName}"></td>
                 <td>
-                    <a th:href="@{/patientDashboard/{id}(id=${pat.id})}" th:text="${pat.id}"></a>
+                    <a th:href="@{/patientDashboard/{id}(id=${pat.healthInsuranceNumber})}" th:text="${pat.healthInsuranceNumber}"></a>
                 </td>
-                <td th:text="${pat.health_card_expiration_date}"></td>
+                <td th:text="${pat.cardExpiration}"></td>
                 <td th:text="${pat.address}"></td>
-                <td th:text="${pat.year_of_birth}"></td>
+                <td th:text="${pat.birthDate}"></td>
 
                 <td>
-                    <a th:href="@{/updatePatient/{id}(id=${pat.id})}" class="btn btn-primary m-1">Update</a>
-                    <a th:href="@{/deletePatient/{id}(id=${pat.id})}" class="btn btn-danger m-1">delete</a>
+                    <a th:href="@{/updatePatient/{id}(id=${pat.healthInsuranceNumber})}" class="btn btn-primary m-1">Update</a>
+                    <a th:href="@{/deletePatient/{id}(id=${pat.healthInsuranceNumber})}" class="btn btn-danger m-1">delete</a>
                 </td>
             </tr>
         </table>

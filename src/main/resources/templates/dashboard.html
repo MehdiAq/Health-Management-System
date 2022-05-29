@@ -30,7 +30,7 @@
             <!--      <img src="/w3images/avatar2.png" class="w3-circle w3-margin-right" style="width:46px">-->
         </div>
         <div class="w3-col s8 w3-bar">
-            <span>Welcome, <strong th:text="${patient.first_name}"></strong></span><br>
+            <span>Welcome, <strong th:text="${patient.firstName}"></strong></span><br>
             <a href="#" class="w3-bar-item w3-button"><i class="fa fa-envelope"></i></a>
             <a href="#" class="w3-bar-item w3-button"><i class="fa fa-user"></i></a>
             <a href="#" class="w3-bar-item w3-button"><i class="fa fa-cog"></i></a>
@@ -59,7 +59,7 @@
     </header>
 
     <div class="w3-row-padding w3-margin-bottom mb-3">
-        <a th:href="@{/addNew}">
+        <a th:href="@{/addNewPatient}">
             <div class="w3-quarter">
                 <div class="w3-container w3-red w3-padding-16">
                     <div class="w3-left"><i class="fa fa-comment w3-xxxlarge"></i></div>
@@ -116,17 +116,17 @@
             </tr>
             </thead>
             <tr th:each="apt:${appointments}">
-                <td th:text="${apt.appointmentName}"></td>
+                <td th:text="${apt.procedure}"></td>
                 <td th:text="${apt.doctor.firstName + ' ' + apt.doctor.lastName}"></td>
                 <td th:text="${apt.appointmentDate}"></td>
-                <td th:text="${apt.appointmentTime}"></td>
+                <td th:text="${apt.timeSlot}"></td>
                 <td>
                     <a th:href="@{/updateAppointment/{id}(id=${apt.appointmentId})}" class="btn btn-primary m-1">Update</a>
                     <a th:href="@{/deleteAppointment/{id}(id=${apt.appointmentId})}" class="btn btn-danger m-1">delete</a>
                 </td>
             </tr>
         </table>
-        <a th:href="@{/createAppointment}" class="btn btn-primary btn-sm mb-3">Create New Appointment</a>
+        <a th:href="@{/appointments/new}" class="btn btn-primary btn-sm mb-3">Create New Appointment</a>
     </div>
     <!-- End page content -->
 </div>
