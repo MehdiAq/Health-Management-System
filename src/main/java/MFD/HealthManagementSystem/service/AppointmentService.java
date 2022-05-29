@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.*;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.*;
 
+import java.sql.Date;
 import java.util.*;
 
 @Service
@@ -79,5 +80,9 @@ public class AppointmentService {
 
     public void deleteAppointment(long appointmentId) {
         appointmentRepository.deleteById(appointmentId);
+    }
+
+    public List<Appointment> getAppointmentListByDate(Date date) {
+        return appointmentRepository.findAppointmentsByAppointmentDate(date);
     }
 }

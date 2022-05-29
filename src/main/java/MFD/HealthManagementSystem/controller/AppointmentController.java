@@ -10,6 +10,7 @@ import org.springframework.validation.*;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.*;
+import java.sql.Date;
 import java.util.*;
 
 @Controller
@@ -25,21 +26,28 @@ public class AppointmentController {
     public String viewAppointments(Model model){
         List<Appointment> appointmentsList = appointmentService.getAppointmentList();
         model.addAttribute("appointments", appointmentsList);
-        return "appointments/list";
+        return "appointments-list";
     }
 
     @GetMapping("/appointments/{doctorId}/list")
-    public String viewDoctorAppointments(@PathVariable(value = "doctorId")Long id, Model model){
+    public String viewDoctorAppointments(@PathVariable(value = "doctorId")long id, Model model){
         List<Appointment> appointmentsList = appointmentService.getDoctorAppointments(id);
         model.addAttribute("appointments", appointmentsList);
-        return "appointments/list";
+        return "appointments-list";
     }
 
     @GetMapping("/appointments/{insuranceNumber}/list")
-    public String viewPatientAppointments(@PathVariable(value = "insuranceNumber")Long id, Model model){
+    public String viewPatientAppointments(@PathVariable(value = "insuranceNumber")long id, Model model){
         List<Appointment> appointmentsList = appointmentService.getPatientAppointments(id);
         model.addAttribute("appointments", appointmentsList);
-        return "appointments/list";
+        return "appointments-list";
+    }
+
+    @GetMapping("/appointments/{date}/list")
+    public String viewPatientAppointments(@PathVariable(value = "date") Date date, Model model){
+        List<Appointment> appointmentsList = appointmentService.getAppointmentListByDate(date);
+        model.addAttribute("appointments", appointmentsList);
+        return "appointments-list";
     }
 
     @GetMapping("/appointments/new")
