@@ -14,8 +14,7 @@ public enum Procedure {
         this.displayName = displayName;
     }
 
-    public String displayName() {
-        return displayName; }
+    public String displayName() { return displayName; }
 
     @Override public String toString() {
         return displayName; }

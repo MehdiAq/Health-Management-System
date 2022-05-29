@@ -17,4 +17,9 @@ public enum TimeSlots {
         return startTime;
     }
 
+    @Override
+    public String toString() {
+        return startTime;
+    }
+
 }

@@ -27,6 +27,7 @@ public class Appointment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long appointmentId;
 
+    @Column(name = "procedure_name")
     private Procedure procedure;
 
     @ManyToOne(fetch = FetchType.LAZY)

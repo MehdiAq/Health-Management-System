@@ -1,16 +1,18 @@
 package MFD.HealthManagementSystem.controller;
 
+import MFD.HealthManagementSystem.exception.RecordNotFoundException;
 import MFD.HealthManagementSystem.model.Appointment;
 import MFD.HealthManagementSystem.model.Doctor;
 import MFD.HealthManagementSystem.model.Patient;
 import MFD.HealthManagementSystem.repository.DoctorRepository;
 import MFD.HealthManagementSystem.service.AppointmentService;
-import org.springframework.beans.factory.annotation.Autowired;
+import MFD.HealthManagementSystem.service.PatientService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.validation.Valid;
@@ -23,14 +25,18 @@ public class AppointmentController {
 
     private final AppointmentService appointmentService;
 
-    public AppointmentController(AppointmentService appointmentService, DoctorRepository doctorRepository) {
+    private final PatientService patientService;
+
+    public AppointmentController(AppointmentService appointmentService, DoctorRepository doctorRepository, PatientService patientService) {
         this.appointmentService = appointmentService;
         this.doctorRepository = doctorRepository;
+        this.patientService = patientService;
     }
 
-    @GetMapping("/createAppointment")
-    public String createAppointment(Model model){
+    @GetMapping("/createAppointment/{id}")
+    public String createAppointment(@PathVariable(value = "id") Long id, Model model) throws RecordNotFoundException {
         Appointment appointment = new Appointment();
+        Patient dbPatient = patientService.getPatientById(id);
         List<Doctor> allDoctors = doctorRepository.findAll();
         model.addAttribute("allDoctors", allDoctors);
         model.addAttribute("appointment", appointment);

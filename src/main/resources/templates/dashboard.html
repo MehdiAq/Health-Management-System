@@ -116,17 +116,17 @@
           </tr>
           </thead>
           <tr th:each="apt:${appointments}">
-            <td th:text="${apt.appointmentName}"></td>
+            <td th:text="${apt.procedure}"></td>
             <td th:text="${apt.doctor.firstName + ' ' + apt.doctor.lastName}"></td>
             <td th:text="${apt.appointmentDate}"></td>
-            <td th:text="${apt.appointmentTime}"></td>
+            <td th:text="${apt.timeSlots}"></td>
             <td>
                   <a th:href="@{/updateAppointment/{id}(id=${apt.appointmentId})}" class="btn btn-primary m-1">Update</a>
                   <a th:href="@{/deleteAppointment/{id}(id=${apt.appointmentId})}" class="btn btn-danger m-1">delete</a>
             </td>
           </tr>
         </table>
-      <a th:href="@{/createAppointment}" class="btn btn-primary btn-sm mb-3">Create New Appointment</a>
+      <a th:href="@{/createAppointment/{id}(id=${patient.id})}" class="btn btn-primary btn-sm mb-3">Create New Appointment</a>
     </div>
   <!-- End page content -->
 </div>
