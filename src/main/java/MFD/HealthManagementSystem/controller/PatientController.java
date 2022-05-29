@@ -26,9 +26,6 @@ public class PatientController {
     @GetMapping("/")
     public String viewHomePage(Model model){
         List<Patient> patientList = patientService.getPatientList();
-//        List<PatientOutput> result = patientList.stream().map(
-//                        data-> mapper.convertValue(data, PatientOutput.class)).
-//                collect(Collectors.toList());
         model.addAttribute("allPatients", patientList);
         return "index";
     }

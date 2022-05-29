@@ -65,7 +65,17 @@ public class DoctorService {
         doctorRepository.deleteById(doctorId);
     }
 
-    public List<Doctor> getDoctorListByName(String name) {
+    public List<Doctor> getDoctorListByName(String name) throws RecordNotFoundException{
+        if(doctorRepository.findDoctorsByFirstNameContainsOrLastNameContains(name).isEmpty()) {
+            throw new RecordNotFoundException("No Doctors with name containing: " + name);
+        }
         return doctorRepository.findDoctorsByFirstNameContainsOrLastNameContains(name);
+    }
+
+    public List<Doctor> getDoctorListBySpecialty(String specialty) throws RecordNotFoundException{
+        if(doctorRepository.findDoctorsBySpecialty(specialty).isEmpty()) {
+            throw new RecordNotFoundException("No Doctors with " + specialty + " specialty");
+        }
+        return doctorRepository.findDoctorsBySpecialty(specialty);
     }
 }
