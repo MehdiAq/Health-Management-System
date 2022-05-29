@@ -27,7 +27,7 @@ public class Appointment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long appointmentId;
 
-    private String appointmentName;
+    private Procedure procedure;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "doctor_id")
@@ -35,13 +35,10 @@ public class Appointment {
     private Doctor doctor;
 
     @Column(name = "date_of_appointment")
-//    @DateFormat(pattern = "yyyy-MM-dd")
-//    @JsonFormat(pattern="dd MMMM yyyy")
     private LocalDate appointmentDate;
 
     @Column(name = "time_of_appointment")
-    @JsonFormat(pattern="HH:mm")
-    private LocalTime appointmentTime;
+    private TimeSlots timeSlots;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "health_insurance_number")

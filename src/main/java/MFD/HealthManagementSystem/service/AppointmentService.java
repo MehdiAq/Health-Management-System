@@ -49,9 +49,9 @@ public class AppointmentService {
             if (appointment1.isPresent()) {
                 Appointment appointment2 = appointment1.get(); //the data that I fetched from db
                 appointment2.setAppointmentId(appointment.getAppointmentId());
-                appointment2.setAppointmentName(appointment.getAppointmentName());
+//                appointment2.setAppointmentName(appointment.getAppointmentName());
                 appointment2.setAppointmentDate(appointment.getAppointmentDate());
-                appointment2.setAppointmentTime(appointment.getAppointmentTime());
+//                appointment2.setAppointmentTime(appointment.getAppointmentTime());
                 appointment2 = repository.save(appointment2);
 
                 return appointment2;
