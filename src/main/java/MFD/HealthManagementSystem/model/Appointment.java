@@ -36,7 +36,7 @@ public class Appointment {
     private Date appointmentDate;
 
     @Column(name = "time_of_appointment")
-    private Date appointmentTime;
+    private TimeSlots timeSlots;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "health_insurance_number")
