@@ -15,38 +15,40 @@
     <h2>Update Patient</h2>
     <form th:action="@{/save}" th:object="${patient}" method="post">
 
+        <input type="text" th:field="*{first_name}" placeholder="Enter first name" class="form-control mb-4 col-4"/>
+        <p th:if="${#fields.hasErrors('first_name')}" th:errorclass="error" th:errors="*{first_name}"></p>
 
-        <input type="hidden" th:field="*{firstName}" placeholder="Enter first name" class="form-control mb-4 col-4"/>
-        <p th:if="${#fields.hasErrors('firstName')}" th:errorclass="error" th:errors="*{firstName}"></p>
+        <input type="text" th:field="*{last_name}" placeholder="Enter last name" class="form-control mb-4 col-4">
+        <p th:if="${#fields.hasErrors('last_name')}" th:errorclass="error" th:errors="*{last_name}"></p>
 
-        <input type="hidden" th:field="*{lastName}" placeholder="Enter last name" class="form-control mb-4 col-4">
-        <p th:if="${#fields.hasErrors('lastName')}" th:errorclass="error" th:errors="*{lastName}"></p>
+        <input type="number" th:field="*{id}" placeholder="Enter Health Insurance Number" class="form-control mb-4 col-4"/>
+        <p th:if="${#fields.hasErrors('id')}" th:errorclass="error" th:errors="*{id}"></p>
 
-        <input type="hidden" th:field="*{healthInsuranceNumber}" placeholder="Enter Health Insurance Number" class="form-control mb-4 col-4"/>
-        <p th:if="${#fields.hasErrors('healthInsuranceNumber')}" th:errorclass="error" th:errors="*{healthInsuranceNumber}"></p>
+        <!--        <input type="text" th:field="*{password}" placeholder="Enter password" class="form-control mb-4 col-4"/>-->
+        <!--        <p th:if="${#fields.hasErrors('password')}" th:errorclass="error" th:errors="*{password}"></p>-->
 
-        <input type="text" th:field="*{cardExpiration}" placeholder="Enter Card Expiration" class="form-control mb-4 col-4">
-        <p th:if="${#fields.hasErrors('cardExpiration')}" th:errorclass="error" th:errors="*{cardExpiration}"></p>
+        <input type="date" th:field="*{health_card_expiration_date}" placeholder="Enter Card Expiration" class="form-control mb-4 col-4">
+        <p th:if="${#fields.hasErrors('health_card_expiration_date')}" th:errorclass="error" th:errors="*{health_card_expiration_date}"></p>
 
         <input type="text" th:field="*{address}" placeholder="Enter address" class="form-control mb-4 col-4">
         <p th:if="${#fields.hasErrors('address')}" th:errorclass="error" th:errors="*{address}"></p>
 
-        <input type="hidden" th:field="*{birthDate}" placeholder="Enter birth date" class="form-control mb-4 col-4">
-        <p th:if="${#fields.hasErrors('birthDate')}" th:errorclass="error" th:errors="*{birthDate}"></p>
+        <input type="date" th:field="*{year_of_birth}" placeholder="Enter birth date" class="form-control mb-4 col-4">
+        <p th:if="${#fields.hasErrors('year_of_birth')}" th:errorclass="error" th:errors="*{year_of_birth}"></p>
 
         <input type="email" th:field="*{email}" placeholder="Enter email" class="form-control mb-4 col-4">
         <p th:if="${#fields.hasErrors('email')}" th:errorclass="error" th:errors="*{email}"></p>
 
-        <input type="text" th:field="*{phoneNumber}" placeholder="Enter phone number" class="form-control mb-4 col-4">
-        <p th:if="${#fields.hasErrors('phoneNumber')}" th:errorclass="error" th:errors="*{phoneNumber}"></p>
+        <input type="text" th:field="*{cellphone}" placeholder="Enter phone number" class="form-control mb-4 col-4">
+        <p th:if="${#fields.hasErrors('cellphone')}" th:errorclass="error" th:errors="*{cellphone}"></p>
 
-        <input type="text" th:field="*{familyDoctor}" placeholder="Enter family doctor" class="form-control mb-4 col-4">
-        <p th:if="${#fields.hasErrors('familyDoctor')}" th:errorclass="error" th:errors="*{familyDoctor}"></p>
+        <input type="text" th:field="*{family_doctor}" placeholder="Enter family doctor" class="form-control mb-4 col-4">
+        <p th:if="${#fields.hasErrors('family_doctor')}" th:errorclass="error" th:errors="*{family_doctor}"></p>
 
-<!--        <label>Showing all the server errors</label>-->
-<!--        <ul>-->
-<!--            <li th:each="err :${#fields.errors()}" th:text="${err}" class="error"></li>-->
-<!--        </ul>-->
+        <!--        <label>Showing all the server errors</label>-->
+        <!--        <ul>-->
+        <!--            <li th:each="err :${#fields.errors()}" th:text="${err}" class="error"></li>-->
+        <!--        </ul>-->
 
         <button type="submit" class="btn btn-info col-2">Update Patient</button>
     </form>
