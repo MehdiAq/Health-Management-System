@@ -64,4 +64,8 @@ public class DoctorService {
     public void deleteDoctor(long doctorId) {
         doctorRepository.deleteById(doctorId);
     }
+
+    public List<Doctor> getDoctorListByName(String name) {
+        return doctorRepository.findDoctorsByFirstNameContainsOrLastNameContains(name);
+    }
 }

@@ -67,28 +67,28 @@ public class MedicalServiceHistoryService {
     }
 
     public List<MedicalServiceHistory> getPatientMedicalServiceHistoryServiceList(long healthInsuranceNumber) throws RecordNotFoundException {
-        if(repository.findMedicalServiceHistoriesByPatient_HealthInsuranceNumber(healthInsuranceNumber) == null){
+        if(repository.findMedicalServiceHistoriesByPatient_HealthInsuranceNumber(healthInsuranceNumber).isEmpty()){
             throw new RecordNotFoundException("No such Medical Service History Exists --- Patient Health Insurance Number: " + healthInsuranceNumber);
         }
         return repository.findMedicalServiceHistoriesByPatient_HealthInsuranceNumber(healthInsuranceNumber);
     }
 
     public List<MedicalServiceHistory> getDoctorMedicalServiceHistoryServiceList(long id) throws RecordNotFoundException {
-        if(repository.findMedicalServiceHistoriesByDoctor_Id(id) == null){
+        if(repository.findMedicalServiceHistoriesByDoctor_Id(id).isEmpty()){
             throw new RecordNotFoundException("No such Medical Service History Exists --- Doctor ID: " + id);
         }
         return repository.findMedicalServiceHistoriesByDoctor_Id(id);
     }
 
     public List<MedicalServiceHistory> getServiceMedicalServiceHistoryServiceList(String name) throws RecordNotFoundException {
-        if(repository.findMedicalServiceHistoriesByServiceName(name) == null){
+        if(repository.findMedicalServiceHistoriesByServiceName(name).isEmpty()){
             throw new RecordNotFoundException("No such Medical Service History Exists --- Service Name: " + name);
         }
         return repository.findMedicalServiceHistoriesByServiceName(name);
     }
 
     public List<MedicalServiceHistory> getMedicalServiceHistoryServiceListForDate(Date date) throws RecordNotFoundException {
-        if(repository.findMedicalServiceHistoriesByServiceDate(date) == null){
+        if(repository.findMedicalServiceHistoriesByServiceDate(date).isEmpty()){
             throw new RecordNotFoundException("No such Medical Service History Exists --- Date: " + date);
         }
         return repository.findMedicalServiceHistoriesByServiceDate(date);

@@ -28,21 +28,21 @@ public class PrescriptionHistoryService {
 
 
     public List<PrescriptionHistory> getPatientPrescriptionHistoryList(long healthInsuranceNumber) throws RecordNotFoundException {
-        if(repository.findPrescriptionHistoriesByPatient_HealthInsuranceNumber(healthInsuranceNumber) == null){
+        if(repository.findPrescriptionHistoriesByPatient_HealthInsuranceNumber(healthInsuranceNumber).isEmpty()){
             throw new RecordNotFoundException("No such Prescription History Exists --- Patient Health Insurance Number: " + healthInsuranceNumber);
         }
         return repository.findPrescriptionHistoriesByPatient_HealthInsuranceNumber(healthInsuranceNumber);
     }
 
     public List<PrescriptionHistory> getPrescriptionHistoryListByMedication(String name) throws RecordNotFoundException {
-        if(repository.findPrescriptionHistoriesByMedicationName(name) == null){
+        if(repository.findPrescriptionHistoriesByMedicationName(name).isEmpty()){
             throw new RecordNotFoundException("No such Prescription History Exists --- Service Name: " + name);
         }
         return repository.findPrescriptionHistoriesByMedicationName(name);
     }
 
     public List<PrescriptionHistory> getPrescriptionHistoryListForDate(Date date) throws RecordNotFoundException {
-        if(repository.findPrescriptionHistoriesByDateOfPrescription(date) == null){
+        if(repository.findPrescriptionHistoriesByDateOfPrescription(date).isEmpty()){
             throw new RecordNotFoundException("No such Prescription History Exists --- Date: " + date);
         }
         return repository.findPrescriptionHistoriesByDateOfPrescription(date);

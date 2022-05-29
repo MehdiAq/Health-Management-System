@@ -27,6 +27,13 @@ public class DoctorController {
         return "doctors";
     }
 
+    @GetMapping("/doctors/{name}/list")
+    public String viewDoctorsByName(@PathVariable(value = "name")String name, Model model) throws RecordNotFoundException {
+        List<Doctor> doctorList = doctorService.getDoctorListByName(name);
+        model.addAttribute("allDoctors", doctorList);
+        return "service-histories";
+    }
+
     @GetMapping("/doctors/new")
     public String addNewDoctor(Model model){
         Doctor doctor = new Doctor();
