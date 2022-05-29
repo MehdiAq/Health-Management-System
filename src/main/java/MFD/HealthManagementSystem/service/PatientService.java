@@ -38,15 +38,15 @@ public class PatientService {
     }
 
     public Patient saveOrUpdatePatient(Patient patient){
-        if(patient.getId() == null){
+        if(patient.getHealthInsuranceNumber() == null){
             repository.save(patient);
             return patient;
         }
         else{
-            Optional<Patient> patient1 = repository.findById(patient.getId());
+            Optional<Patient> patient1 = repository.findById(patient.getHealthInsuranceNumber());
             if (patient1.isPresent()) {
                 Patient patient2 = patient1.get(); //the data that I fetched from db
-                patient2.setId(patient.getId());
+                patient2.setHealthInsuranceNumber(patient.getHealthInsuranceNumber());
                 patient2.setFirstName(patient.getFirstName());
                 patient2.setLastName(patient.getLastName());
                 patient2.setAddress(patient.getAddress());
