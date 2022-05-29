@@ -21,13 +21,13 @@ public class MedicalServiceHistoryService {
         this.repository = repository;
     }
 
-    public List<MedicalServiceHistory> getMedicalServiceHistoryServiceList() {
+    public List<MedicalServiceHistory> getMedicalServiceHistoryList() {
         List<MedicalServiceHistory> fetchData = repository.findAll();
         var result = mapper.convertValue(fetchData, List.class);
         return result;
     }
 
-    public MedicalServiceHistory saveOrUpdateMedServiceHistory(MedicalServiceHistory history){
+    public MedicalServiceHistory saveOrUpdateMedService(MedicalServiceHistory history){
         if(repository.findMedicalServiceHistoryByPatient_HealthInsuranceNumberAndServiceNameAndServiceDate(history.getPatient().getHealthInsuranceNumber(), history.getServiceName(), history.getServiceDate()) == null){
             repository.save(history);
             return history;

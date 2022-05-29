@@ -1,6 +1,7 @@
 package MFD.HealthManagementSystem.model;
 
 import lombok.*;
+import org.hibernate.validator.constraints.*;
 
 import javax.persistence.*;
 
@@ -26,6 +27,7 @@ public class Doctor {
     private String address;
 
     @Column(name = "cellphone")
+    @UniqueElements
     private String cellphone;
 
     @Column(name = "specialty")

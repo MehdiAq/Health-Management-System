@@ -23,7 +23,7 @@ public class MedicalServiceHistoryController {
 
     @GetMapping("/serviceHistory/list")
     public String viewMedServices(Model model){
-        List<MedicalServiceHistory> medicalServiceHistories = medicalServiceHistoryService.getMedicalServiceHistoryServiceList();
+        List<MedicalServiceHistory> medicalServiceHistories = medicalServiceHistoryService.getMedicalServiceHistoryList();
         model.addAttribute("medHistories", medicalServiceHistories);
         return "service-histories";
     }
@@ -67,12 +67,12 @@ public class MedicalServiceHistoryController {
         if (result.hasErrors()){
             return "new-service-history";
         }
-        medicalServiceHistoryService.saveOrUpdateMedServiceHistory(saveService);
+        medicalServiceHistoryService.saveOrUpdateMedService(saveService);
         return "redirect:/serviceHistory/list";
     }
 
     @GetMapping("/serviceHistory/update/{insuranceNumber}/{serviceName}/{date}")
-    public String updatemedService(@PathVariable(value = "insuranceNumber") Long healthInsuranceNumber, @PathVariable(value = "serviceName")String serviceName, @PathVariable(value = "date") java.sql.Date date, Model model) throws RecordNotFoundException, RecordAlreadyExistsException {
+    public String updateMedService(@PathVariable(value = "insuranceNumber") Long healthInsuranceNumber, @PathVariable(value = "serviceName")String serviceName, @PathVariable(value = "date") java.sql.Date date, Model model) throws RecordNotFoundException, RecordAlreadyExistsException {
         MedicalServiceHistory dbMedicalServiceHistory = medicalServiceHistoryService.getMedicalServiceHistory(healthInsuranceNumber, serviceName, date);
         model.addAttribute("medicalServiceHistory", dbMedicalServiceHistory);
         return "update-service-history";
