@@ -45,7 +45,7 @@ public class PatientService {
         else{
             Optional<Patient> patient1 = repository.findById(patient.getHealthInsuranceNumber());
             if (patient1.isPresent()) {
-                Patient patient2 = patient1.get(); //the data that I fetched from db
+                Patient patient2 = patient1.get();
                 patient2.setHealthInsuranceNumber(patient.getHealthInsuranceNumber());
                 patient2.setFirstName(patient.getFirstName());
                 patient2.setLastName(patient.getLastName());

@@ -53,10 +53,6 @@ public class RestController {
 
     @PostMapping("/patients/{patientInsuranceNumber}/{doctorId}/appointments")
     public Appointment createAppointment(@PathVariable(value = "patientInsuranceNumber") Long healthInsuranceNumber,@PathVariable(value = "doctorId") long doctorId, @Valid @RequestBody Appointment appointment){
-//        return patientRepository.findById(healthInsuranceNumber).map(patient -> {
-//            appointment.setPatient(patient);
-//            return appointmentRepository.save(appointment);
-//        }).orElseThrow(()-> new ResourceNotFoundException("Patient Health Insurance Number " + healthInsuranceNumber + " not found"));
         appointment.setPatient(patientRepository.findById(healthInsuranceNumber).orElseThrow(()-> new ResourceNotFoundException("Patient Health Insurance Number " + healthInsuranceNumber + " not found")));
         appointment.setDoctor(doctorRepository.findById(doctorId).orElseThrow(()-> new ResourceNotFoundException("Doctor with ID " + doctorId + " not found")));
         return appointmentRepository.save(appointment);
@@ -65,17 +61,9 @@ public class RestController {
     @PostMapping("/doctors/{doctor_Id}/createAvailability")
     public DoctorAvailability createDocAvail(@PathVariable(value = "doctor_Id") Long doctorId, @RequestBody DoctorAvailability doctorAvailability) {
 
-//        doctorAvailability = mapper.convertValue(doctorAvailability, DoctorAvailability.class);
         doctorAvailability.setDoctor(doctorRepository.findById(doctorId).orElseThrow(()-> new ResourceNotFoundException("")));
-//        Doctor doctor = mapper.convertValue(doctorAvailability, Doctor.class);
         return doctorAvailabilityRepository.save(doctorAvailability);
     }
-//    doctorAvailability = mapper.convertValue(doctorAvailability, DoctorAvailability.class);
-//        return doctorRepository.findById(doctorId).map(doctor -> {
-//        doctorAvailability.setDoctor(doctor);
-//        return doctorAvailabilityRepository.save(doctorAvailability);
-//    }).orElseThrow(()-> new ResourceNotFoundException("No Doctor with the ID: " + doctorId));
-//}
 
     @PostMapping("/patients/{insuranceNumber}/prescription/")
     public PrescriptionHistory recordPrescription(@PathVariable(value = "insuranceNumber") long healthInsuranceNumber, @RequestBody PrescriptionHistory prescriptionHistory) {
@@ -87,10 +75,6 @@ public class RestController {
 
     @PostMapping("/patients/{insuranceNumber}/{doctorId}/service")
     public MedicalServiceHistory recordService(@PathVariable(value = "insuranceNumber") long healthInsuranceNumber,@PathVariable(value = "doctorId") long doctorId, @RequestBody MedicalServiceHistory medicalServiceHistory) {
-//        return patientRepository.findById(healthInsuranceNumber).map(patient -> {
-//            medicalServiceHistory.setPatient(patient);
-//            return medicalServiceHistoryRepository.save(medicalServiceHistory);
-//        }).orElseThrow(()-> new ResourceNotFoundException("Patient Health Insurance Number " + healthInsuranceNumber + " not found"));
         medicalServiceHistory.setPatient(patientRepository.findById(healthInsuranceNumber).orElseThrow(()-> new ResourceNotFoundException("Patient Health Insurance Number " + healthInsuranceNumber + " not found")));
         medicalServiceHistory.setDoctor(doctorRepository.findById(doctorId).orElseThrow(()-> new ResourceNotFoundException("Doctor with ID " + doctorId + " not found")));
         return medicalServiceHistoryRepository.save(medicalServiceHistory);
