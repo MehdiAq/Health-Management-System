@@ -14,7 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import java.util.*;
+import java.util.Date;
 
 @Entity
 @Table(name="appointments")
@@ -28,7 +28,7 @@ public class Appointment {
     @Id
     @Column(name = "appointment_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long appointmentId;
+    private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "doctor_id")
@@ -50,4 +50,5 @@ public class Appointment {
     @JoinColumn(name = "health_insurance_number")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Patient patient;
+
 }

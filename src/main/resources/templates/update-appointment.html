@@ -30,8 +30,8 @@
     <div class="container" align="center">
         <h1 class="pt-3"> Patient Health System</h1>
         <hr>
-        <h2>Create New Appointment</h2>
-        <form th:action="@{/appointments/save/{patId}(patId=${appointment.patient.id})}" th:object="${appointment}" method="post">
+        <h2>Update Appointment</h2>
+        <form th:action="@{/appointments/save/{patId}/{id}(patId=${appointment.patient.id}, id=${appointment.id})}" th:object="${appointment}" method="post">
 
             <input type="hidden" th:field="*{patient}" th:value="${appointment.patient}"/>
 
@@ -59,7 +59,7 @@
                             th:selected="${timeSlot.startTime}"></option>
                 </select>
 
-            <button type="submit" class="btn btn-info col-2">Save Appointment</button>
+            <button type="submit" class="btn btn-info col-2">Update Appointment</button>
         </form>
     </div>
 </div>

@@ -68,25 +68,37 @@ public class AppointmentController {
         return "new-appointment";
     }
 
-    @PostMapping("/appointments/save")
-    public String saveAppointment(@ModelAttribute("appointment") Appointment saveAppointment, BindingResult result) throws RecordAlreadyExistsException{
-//        if (result.hasErrors()){
-//            return "new-appointment";
-//        }
+    @PostMapping("/appointments/save/{patId}")
+    public String saveNewAppointment(@ModelAttribute("appointment") Appointment saveAppointment, BindingResult result) throws RecordAlreadyExistsException{
+        if (result.hasErrors()){
+            return "new-appointment";
+        }
         appointmentService.saveOrUpdateAppointment(saveAppointment);
-        return "redirect:/patientDashboard";
+        return "redirect:/patientDashboard/{patId}";
     }
 
-    @GetMapping("/appointments/update/{id}")
+    @PostMapping("/appointments/save/{patId}/{id}")
+    public String saveUpdatedAppointment(@ModelAttribute("appointment") Appointment saveAppointment, BindingResult result) throws RecordAlreadyExistsException{
+        if (result.hasErrors()){
+            return "new-appointment";
+        }
+        appointmentService.saveOrUpdateAppointment(saveAppointment);
+        return "redirect:/patientDashboard/{patId}";
+    }
+
+    @GetMapping("/appointments/update/{patId}/{id}")
     public String updateAppointment(@PathVariable(value = "id") Long id, Model model) throws RecordNotFoundException {
         Appointment dbAppointment = appointmentService.getAppointmentById(id);
+        List<Doctor> allDoctors = doctorRepository.findAll();
+
+        model.addAttribute("allDoctors", allDoctors);
         model.addAttribute("appointment", dbAppointment);
         return "update-appointment";
     }
 
-    @GetMapping("/appointments/delete/{id}")
+    @GetMapping("/appointments/delete/{patId}/{id}")
     public String deleteAppointmentWithId(@PathVariable(value = "id") Long id){
         appointmentService.deleteAppointment(id);
-        return "redirect:/appointments/list";
+        return "redirect:/patientDashboard/{id}";
     }
 }

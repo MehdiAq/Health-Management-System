@@ -14,10 +14,13 @@ public class AppointmentService {
 
     private final AppointmentRepository repository;
 
+    private final MedicalServiceRepository medRepository;
+
     private final ObjectMapper mapper = new ObjectMapper();
 
-    public AppointmentService(AppointmentRepository appointmentRepository) {
+    public AppointmentService(AppointmentRepository appointmentRepository, MedicalServiceRepository medRepository) {
         this.repository = appointmentRepository;
+        this.medRepository = medRepository;
     }
 
     public List<Appointment> getAppointmentList() {
@@ -39,9 +42,9 @@ public class AppointmentService {
     }
 
     public Appointment getAppointmentById(Long id) throws RecordNotFoundException {
-        Optional<Appointment> appointment =  repository.findById(id);
-        if(appointment.isPresent()){
-            return mapper.convertValue(appointment.get(), Appointment.class);
+//        Optional<Appointment> appointment =  repository.findById(id);
+        if(repository.findById(id).isPresent()){
+            return repository.findById(id).get();
         }
         else{
             throw new RecordNotFoundException("Appointment with ID: " + id +" not found");
@@ -49,36 +52,70 @@ public class AppointmentService {
     }
 
     public Appointment saveOrUpdateAppointment(Appointment appointment) throws RecordAlreadyExistsException{
-        if(appointment.getAppointmentId() == null){
-            Appointment db = repository.findAppointmentByDoctorAndAppointmentDateAndTimeSlot(appointment.getDoctor(), appointment.getAppointmentDate(), appointment.getTimeSlot());
-            if(db != null){
-                throw new RecordAlreadyExistsException("That Timeslot is already booked with that Doctor");
+        if(appointment.getId() == null){
+            Appointment apt = repository.findAppointmentByDoctorAndAppointmentDateAndTimeSlot(appointment.getDoctor(), appointment.getAppointmentDate(), appointment.getTimeSlot());
+            if(apt != null) {
+                if (apt.getProcedure().equals(appointment.getProcedure())) {
+                    throw new RecordAlreadyExistsException("That Timeslot is already booked with that Doctor");
+                }
+                appointment = updateAppointment(apt, appointment);
             }
             repository.save(appointment);
+            medRepository.save(new MedicalService(appointment.getPatient(), appointment.getProcedure(), appointment.getAppointmentDate(), appointment.getDoctor()));
+//                MedicalService toSave = new MedicalService();
+//                toSave.setPatient(appointment.getPatient());
+//                toSave.setServiceName(appointment.getProcedure());
+//                toSave.setServiceDate(appointment.getAppointmentDate());
+//                toSave.setDoctor(appointment.getDoctor());
+//            medRepository.save(toSave);
             return appointment;
         }
         else{
-            Optional<Appointment> appointment1 = repository.findById(appointment.getAppointmentId());
+            Optional<Appointment> appointment1 = repository.findById(appointment.getId());
             if (appointment1.isPresent()) {
                 Appointment appointment2 = appointment1.get();
-                appointment2.setAppointmentId(appointment.getAppointmentId());
+                appointment2.setId(appointment.getId());
                 appointment2.setDoctor(appointment.getDoctor());
                 appointment2.setAppointmentDate(appointment.getAppointmentDate());
                 appointment2.setTimeSlot(appointment.getTimeSlot());
                 appointment2.setPatient(appointment.getPatient());
+                appointment2.setProcedure(appointment.getProcedure());
                 appointment2 = repository.save(appointment2);
+//                medRepository.save(new MedicalService(appointment2.getPatient(), appointment2.getProcedure(), appointment2.getAppointmentDate(), appointment2.getDoctor()));
+                MedicalService toUpdate = medRepository.findByPatientAndServiceNameAndServiceDate(appointment.getPatient(), appointment.getProcedure(), appointment.getAppointmentDate());
 
+                    toUpdate.setPatient(appointment2.getPatient());
+                    toUpdate.setDoctor(appointment.getDoctor());
+                    toUpdate.setServiceDate(appointment2.getAppointmentDate());
+                    toUpdate.setServiceName(appointment.getProcedure());
+                    medRepository.save(toUpdate);
                 return appointment2;
+
             }
             else{
+                medRepository.save(new MedicalService(appointment.getPatient(), appointment.getProcedure(), appointment.getAppointmentDate(), appointment.getDoctor()));
                 repository.save(appointment);
                 return appointment;
             }
         }
     }
 
-    public void deleteAppointment(Long appointmentId) {
-        repository.deleteById(appointmentId);
+    private Appointment updateAppointment(Appointment apt, Appointment appointment) {
+        Optional<Appointment> appointment1 = repository.findById(apt.getId());
+        if (appointment1.isPresent()) {
+            Appointment appointment2 = appointment1.get();
+            appointment2.setProcedure(appointment.getProcedure());
+            appointment2.setDoctor(appointment.getDoctor());
+            appointment2.setAppointmentDate(appointment.getAppointmentDate());
+            appointment2.setTimeSlot(appointment.getTimeSlot());
+            appointment2.setPatient(appointment.getPatient());
+            return appointment2;
+        }
+        return appointment;
+    }
+
+    public void deleteAppointment(Long id) {
+        repository.deleteById(id);
     }
 
 //    public List<Appointment> getAppointmentListByDate(Date date) {

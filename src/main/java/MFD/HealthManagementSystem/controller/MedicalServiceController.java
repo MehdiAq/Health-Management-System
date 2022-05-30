@@ -17,8 +17,11 @@ public class MedicalServiceController {
 
     private final MedicalServiceService medicalServiceService;
 
-    public MedicalServiceController(MedicalServiceService medicalServiceService) {
+    private final PatientService patientService;
+
+    public MedicalServiceController(MedicalServiceService medicalServiceService, PatientService patientService) {
         this.medicalServiceService = medicalServiceService;
+        this.patientService = patientService;
     }
 
     @GetMapping("/serviceHistory/list")
@@ -73,14 +76,14 @@ public class MedicalServiceController {
 
     @GetMapping("/serviceHistory/update/{insuranceNumber}/{serviceName}/{date}")
     public String updateMedService(@PathVariable(value = "insuranceNumber") Long healthInsuranceNumber, @PathVariable(value = "serviceName")String serviceName, @PathVariable(value = "date") java.sql.Date date, Model model) throws RecordNotFoundException, RecordAlreadyExistsException {
-        MedicalService dbMedicalService = medicalServiceService.getMedicalServiceHistory(healthInsuranceNumber, serviceName, date);
+        MedicalService dbMedicalService = medicalServiceService.getMedicalServiceHistory(patientService.getPatientById(healthInsuranceNumber), serviceName, date);
         model.addAttribute("medicalServiceHistory", dbMedicalService);
         return "update-medical-service";
     }
 
     @GetMapping("/serviceHistory/delete/{insuranceNumber}/{serviceName}/{date}")
     public String deleteMedService(@PathVariable(value = "insuranceNumber") Long healthInsuranceNumber , @PathVariable(value = "serviceName")String serviceName, @PathVariable(value = "date") java.sql.Date date) throws RecordNotFoundException{
-        medicalServiceService.deleteServiceHistoryByPatientAndServiceAndDate(healthInsuranceNumber, serviceName, date);
+        medicalServiceService.deleteServiceHistoryByPatientAndServiceAndDate(patientService.getPatientById(healthInsuranceNumber), serviceName, date);
         return "redirect:/medical-service-history";
     }
 }

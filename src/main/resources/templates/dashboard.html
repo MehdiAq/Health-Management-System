@@ -119,11 +119,11 @@
             <tr th:each="apt:${appointments}">
                 <td th:text="${apt.procedure}"></td>
                 <td th:text="${apt.doctor.firstName + ' ' + apt.doctor.lastName}"></td>
-                <td th:text="${apt.appointmentDate}"></td>
+                <td th:text="${#dates.dayOfWeekName(apt.appointmentDate)} + ', ' + ${#dates.monthName(apt.appointmentDate)} + ' ' + ${#dates.day(apt.appointmentDate)} + ', ' + ${#dates.year(apt.appointmentDate)}">
                 <td th:text="${apt.timeSlot}"></td>
                 <td>
-                    <a th:href="@{/updateAppointment/{id}(id=${apt.appointmentId})}" class="btn btn-primary m-1">Update</a>
-                    <a th:href="@{/deleteAppointment/{id}(id=${apt.appointmentId})}" class="btn btn-danger m-1">delete</a>
+                    <a th:href="@{/appointments/update/{patId}/{id}(patId=${apt.patient.id}, id=${apt.id})}" class="btn btn-primary m-1">Update</a>
+                    <a th:href="@{/appointments/delete/{aptId}/{id}(aptId=${apt.id}, id=${apt.patient.id})}" class="btn btn-danger m-1">Delete</a>
                 </td>
             </tr>
         </table>
