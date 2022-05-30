@@ -5,8 +5,6 @@ import MFD.HealthManagementSystem.model.*;
 import MFD.HealthManagementSystem.repository.*;
 import com.fasterxml.jackson.databind.*;
 import org.springframework.beans.factory.annotation.*;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.*;
@@ -28,10 +26,10 @@ public class RestController {
 //    private DoctorAvailabilityRepository doctorAvailabilityRepository;
 
     @Autowired
-    private MedicalServiceHistoryRepository medicalServiceHistoryRepository;
+    private MedicalServiceRepository medicalServiceRepository;
 
     @Autowired
-    private PrescriptionHistoryRepository prescriptionHistoryRepository;
+    private PrescriptionRepository prescriptionRepository;
 
     private final ObjectMapper mapper = new ObjectMapper();
 
@@ -48,11 +46,11 @@ public class RestController {
 
     @GetMapping("/patients/{patientInsuranceNumber}/appointments")
     public List<Appointment> getAllAppointmentsByInsuranceNumber(@PathVariable(value="patientInsuranceNumber") Long healthInsuranceNumber){
-        return appointmentRepository.findAllByPatient_HealthInsuranceNumber(healthInsuranceNumber);
+        return appointmentRepository.findAllByPatient_Id(healthInsuranceNumber);
     }
 
     @PostMapping("/patients/{patientInsuranceNumber}/{doctorId}/appointments")
-    public Appointment createAppointment(@PathVariable(value = "patientInsuranceNumber") Long healthInsuranceNumber,@PathVariable(value = "doctorId") long doctorId, @Valid @RequestBody Appointment appointment){
+    public Appointment createAppointment(@PathVariable(value = "patientInsuranceNumber") Long healthInsuranceNumber,@PathVariable(value = "doctorId") Long doctorId, @Valid @RequestBody Appointment appointment){
         appointment.setPatient(patientRepository.findById(healthInsuranceNumber).orElseThrow(()-> new ResourceNotFoundException("Patient Health Insurance Number " + healthInsuranceNumber + " not found")));
         appointment.setDoctor(doctorRepository.findById(doctorId).orElseThrow(()-> new ResourceNotFoundException("Doctor with ID " + doctorId + " not found")));
         return appointmentRepository.save(appointment);
@@ -66,17 +64,17 @@ public class RestController {
 //    }
 
     @PostMapping("/patients/{insuranceNumber}/prescription/")
-    public PrescriptionHistory recordPrescription(@PathVariable(value = "insuranceNumber") long healthInsuranceNumber, @RequestBody PrescriptionHistory prescriptionHistory) {
+    public Prescription recordPrescription(@PathVariable(value = "insuranceNumber") Long healthInsuranceNumber, @RequestBody Prescription prescription) {
         return patientRepository.findById(healthInsuranceNumber).map(patient -> {
-            prescriptionHistory.setPatient(patient);
-            return prescriptionHistoryRepository.save(prescriptionHistory);
+            prescription.setPatient(patient);
+            return prescriptionRepository.save(prescription);
         }).orElseThrow(()-> new ResourceNotFoundException("Patient Health Insurance Number " + healthInsuranceNumber + " not found"));
     }
 
     @PostMapping("/patients/{insuranceNumber}/{doctorId}/service")
-    public MedicalServiceHistory recordService(@PathVariable(value = "insuranceNumber") long healthInsuranceNumber,@PathVariable(value = "doctorId") long doctorId, @RequestBody MedicalServiceHistory medicalServiceHistory) {
-        medicalServiceHistory.setPatient(patientRepository.findById(healthInsuranceNumber).orElseThrow(()-> new ResourceNotFoundException("Patient Health Insurance Number " + healthInsuranceNumber + " not found")));
-        medicalServiceHistory.setDoctor(doctorRepository.findById(doctorId).orElseThrow(()-> new ResourceNotFoundException("Doctor with ID " + doctorId + " not found")));
-        return medicalServiceHistoryRepository.save(medicalServiceHistory);
+    public MedicalService recordService(@PathVariable(value = "insuranceNumber") Long healthInsuranceNumber, @PathVariable(value = "doctorId") Long doctorId, @RequestBody MedicalService medicalService) {
+        medicalService.setPatient(patientRepository.findById(healthInsuranceNumber).orElseThrow(()-> new ResourceNotFoundException("Patient Health Insurance Number " + healthInsuranceNumber + " not found")));
+        medicalService.setDoctor(doctorRepository.findById(doctorId).orElseThrow(()-> new ResourceNotFoundException("Doctor with ID " + doctorId + " not found")));
+        return medicalServiceRepository.save(medicalService);
     }
 }

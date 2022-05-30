@@ -7,11 +7,7 @@ import com.fasterxml.jackson.databind.*;
 import org.springframework.stereotype.*;
 
 
-import java.sql.*;
-import java.util.ArrayList;
-import java.time.LocalDate;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class AppointmentService {
@@ -30,19 +26,19 @@ public class AppointmentService {
         return result;
     }
 
-    public List<Appointment> getDoctorAppointments(long id) {
-        List<Appointment> fetchData = repository.findAllByDoctor_DoctorId(id);
+    public List<Appointment> getDoctorAppointments(Long id) {
+        List<Appointment> fetchData = repository.findAllByDoctor_Id(id);
         var result = mapper.convertValue(fetchData, List.class);
         return result;
     }
 
-    public List<Appointment> getPatientAppointments(long id) {
-        List<Appointment> fetchData = repository.findAllByPatient_HealthInsuranceNumber(id);
+    public List<Appointment> getPatientAppointments(Long id) {
+        List<Appointment> fetchData = repository.findAllByPatient_Id(id);
         var result = mapper.convertValue(fetchData, List.class);
         return result;
     }
 
-    public Appointment getAppointmentById(long id) throws RecordNotFoundException {
+    public Appointment getAppointmentById(Long id) throws RecordNotFoundException {
         Optional<Appointment> appointment =  repository.findById(id);
         if(appointment.isPresent()){
             return mapper.convertValue(appointment.get(), Appointment.class);
@@ -81,7 +77,7 @@ public class AppointmentService {
         }
     }
 
-    public void deleteAppointment(long appointmentId) {
+    public void deleteAppointment(Long appointmentId) {
         repository.deleteById(appointmentId);
     }
 
@@ -89,12 +85,12 @@ public class AppointmentService {
 //        return repository.findAppointmentsByAppointmentDate(date);
 //    }
     public List<Appointment> getUpcomingAppointmentById(Long id) {
-        List<Appointment> appointments = repository.findAllByPatient_HealthInsuranceNumber(id);
+        List<Appointment> appointments = repository.findAllByPatient_Id(id);
         List<Appointment> upComingAppointments = new ArrayList<>();
-        LocalDate now = LocalDate.now();
+        Date date = new Date();
 
         for(Appointment app : appointments) {
-            if (app.getAppointmentDate().isAfter(now)) {
+            if (app.getAppointmentDate().after(date)) {
                 upComingAppointments.add(app);
             }
         }

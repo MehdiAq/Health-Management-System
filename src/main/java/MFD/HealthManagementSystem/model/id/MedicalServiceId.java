@@ -5,7 +5,7 @@ import MFD.HealthManagementSystem.model.*;
 import java.io.*;
 import java.sql.*;
 
-public class MedicalServiceHistoryId implements Serializable {
+public class MedicalServiceId implements Serializable {
 
 
     private String serviceName;
@@ -14,10 +14,10 @@ public class MedicalServiceHistoryId implements Serializable {
 
 
 
-    public MedicalServiceHistoryId() {
+    public MedicalServiceId() {
     }
 
-    public MedicalServiceHistoryId(String serviceName, Date serviceDate) {
+    public MedicalServiceId(String serviceName, Date serviceDate) {
         this.serviceName = serviceName;
         this.serviceDate = serviceDate;
     }

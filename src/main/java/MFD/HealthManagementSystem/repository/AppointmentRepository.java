@@ -7,8 +7,8 @@ import java.time.*;
 import java.util.*;
 
 public interface AppointmentRepository extends JpaRepository<Appointment, Long> {
-    List<Appointment> findAllByPatient_HealthInsuranceNumber(Long healthInsuranceNumber);
-    List<Appointment> findAllByDoctor_DoctorId(Long id);
-    Appointment findAppointmentByDoctorAndAppointmentDateAndTimeSlot(Doctor doctor, LocalDate date, TimeSlot time);
+    List<Appointment> findAllByPatient_Id(Long healthInsuranceNumber);
+    List<Appointment> findAllByDoctor_Id(Long id);
+    Appointment findAppointmentByDoctorAndAppointmentDateAndTimeSlot(Doctor doctor, Date date, String time);
 //    List<Appointment> findAppointmentsByAppointmentDate(Date date);
 }

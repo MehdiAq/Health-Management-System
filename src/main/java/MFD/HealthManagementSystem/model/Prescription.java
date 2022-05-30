@@ -8,17 +8,16 @@ import org.hibernate.annotations.*;
 import javax.persistence.*;
 import javax.persistence.Entity;
 import javax.persistence.Table;
-import java.io.*;
-import java.sql.*;
+import java.util.Date;
 
 @Entity
-@IdClass(PrescriptionHistoryId.class)
+@IdClass(PrescriptionId.class)
 @Table(name="prescription_history")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class PrescriptionHistory {
+public class Prescription {
     @ManyToOne(fetch = FetchType.LAZY)
     @Id
     @JoinColumn(name = "health_insurance_number")

@@ -5,7 +5,7 @@ import MFD.HealthManagementSystem.model.*;
 import java.io.*;
 import java.sql.*;
 
-public class PrescriptionHistoryId implements Serializable {
+public class PrescriptionId implements Serializable {
 
     private String medicationName;
 
@@ -13,10 +13,10 @@ public class PrescriptionHistoryId implements Serializable {
 
     private Long prescriptionQty;
 
-    public PrescriptionHistoryId() {
+    public PrescriptionId() {
     }
 
-    public PrescriptionHistoryId(String medicationName, Date dateOfPrescription, Long prescriptionQty) {
+    public PrescriptionId(String medicationName, Date dateOfPrescription, Long prescriptionQty) {
         this.medicationName = medicationName;
         this.dateOfPrescription = dateOfPrescription;
         this.prescriptionQty = prescriptionQty;

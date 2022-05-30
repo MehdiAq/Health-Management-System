@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>New Appointment</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet"
+        href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+        crossorigin="anonymous">
+  <style>
+      html, body, h1, h2, h3, h4, h5 {
+          font-family: "Raleway", sans-serif
+      }
+  </style>
+</head>
+<body class="w3-light-grey">
+
+<!-- Top container -->
+<div class="w3-bar w3-top w3-black w3-large" style="z-index:4">
+  <button class="w3-bar-item w3-button w3-hide-large w3-hover-none w3-hover-text-light-grey" onclick="w3_open();"><i
+          class="fa fa-bars"></i>  Menu
+  </button>
+  <span class="w3-bar-item w3-right">Logo</span>
+</div>
+
+<!-- !PAGE CONTENT! -->
+<div class="w3-main" style="text-align: center;margin-top:43px;">
+  <div class="container" align="center">
+    <h2>Prescription history</h2>
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th>Medication</th>
+        <th>Quantity</th>
+        <th>Date</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="prescription: ${prescriptions}">
+        <td th:text="${prescription.medicationName}"></td>
+        <td th:text="${prescription.prescriptionQty}"></td>
+        <td th:text="${prescription.dateOfPrescription}"></td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>New Patient</title>
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+          crossorigin="anonymous">
+</head>
+<body>
+<div class="container">
+    <h1>Patient Updating</h1>
+    <hr>
+    <h2>Update Patient</h2>
+    <form th:action="@{/patients/save}" th:object="${patient}" method="post">
+
+        <input type="text" th:field="*{firstName}" placeholder="Enter first name" class="form-control mb-4 col-4"/>
+        <p th:if="${#fields.hasErrors('firstName')}" th:errorclass="error" th:errors="*{firstName}"></p>
+
+        <input type="text" th:field="*{lastName}" placeholder="Enter last name" class="form-control mb-4 col-4">
+        <p th:if="${#fields.hasErrors('lastName')}" th:errorclass="error" th:errors="*{lastName}"></p>
+
+        <input type="number" th:field="*{id}" placeholder="Enter Health Insurance Number" class="form-control mb-4 col-4"/>
+        <p th:if="${#fields.hasErrors('id')}" th:errorclass="error" th:errors="*{id}"></p>
+
+        <!--        <input type="text" th:field="*{password}" placeholder="Enter password" class="form-control mb-4 col-4"/>-->
+        <!--        <p th:if="${#fields.hasErrors('password')}" th:errorclass="error" th:errors="*{password}"></p>-->
+
+        <input type="text" th:field="*{cardExpiration}" placeholder="Enter Card Expiration" class="form-control mb-4 col-4">
+        <p th:if="${#fields.hasErrors('cardExpiration')}" th:errorclass="error" th:errors="*{cardExpiration}"></p>
+
+        <input type="text" th:field="*{address}" placeholder="Enter address" class="form-control mb-4 col-4">
+        <p th:if="${#fields.hasErrors('address')}" th:errorclass="error" th:errors="*{address}"></p>
+
+        <input type="date" th:field="*{birthDate}" placeholder="Enter birth date" class="form-control mb-4 col-4">
+        <p th:if="${#fields.hasErrors('birthDate')}" th:errorclass="error" th:errors="*{birthDate}"></p>
+
+        <input type="email" th:field="*{email}" placeholder="Enter email" class="form-control mb-4 col-4">
+        <p th:if="${#fields.hasErrors('email')}" th:errorclass="error" th:errors="*{email}"></p>
+
+        <input type="text" th:field="*{phoneNumber}" placeholder="Enter phone number" class="form-control mb-4 col-4">
+        <p th:if="${#fields.hasErrors('phoneNumber')}" th:errorclass="error" th:errors="*{phoneNumber}"></p>
+
+        <input type="text" th:field="*{familyDoctor}" placeholder="Enter family doctor" class="form-control mb-4 col-4">
+        <p th:if="${#fields.hasErrors('familyDoctor')}" th:errorclass="error" th:errors="*{familyDoctor}"></p>
+
+        <!--        <label>Showing all the server errors</label>-->
+        <!--        <ul>-->
+        <!--            <li th:each="err :${#fields.errors()}" th:text="${err}" class="error"></li>-->
+        <!--        </ul>-->
+
+        <button type="submit" class="btn btn-info col-2">Update Patient</button>
+    </form>
+</div>
+
+</body>
+</html>
+
+<style>
+    .error{
+        color: red
+    }
+</style>

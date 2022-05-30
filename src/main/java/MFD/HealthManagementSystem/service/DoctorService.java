@@ -25,7 +25,7 @@ public class DoctorService {
         return result;
     }
 
-    public Doctor getDoctorById(long id) throws RecordNotFoundException {
+    public Doctor getDoctorById(Long id) throws RecordNotFoundException {
         Optional<Doctor> doctor =  doctorRepository.findById(id);
         if(doctor.isPresent()){
             return mapper.convertValue(doctor.get(), Doctor.class);
@@ -36,15 +36,15 @@ public class DoctorService {
     }
 
     public Doctor saveOrUpdateDoctor(Doctor doctor){
-        if(doctor.getDoctorId() == null){
+        if(doctor.getId() == null){
             doctorRepository.save(doctor);
             return doctor;
         }
         else{
-            Optional<Doctor> doctor1 = doctorRepository.findById(doctor.getDoctorId());
+            Optional<Doctor> doctor1 = doctorRepository.findById(doctor.getId());
             if (doctor1.isPresent()) {
                 Doctor doctor2 = doctor1.get();
-                doctor2.setDoctorId(doctor.getDoctorId());
+                doctor2.setId(doctor.getId());
                 doctor2.setFirstName(doctor.getFirstName());
                 doctor2.setLastName(doctor.getLastName());
                 doctor2.setAddress(doctor.getAddress());
@@ -61,7 +61,7 @@ public class DoctorService {
         }
     }
 
-    public void deleteDoctor(long doctorId) {
+    public void deleteDoctor(Long doctorId) {
         doctorRepository.deleteById(doctorId);
     }
 

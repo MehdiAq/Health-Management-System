@@ -18,7 +18,7 @@
 //    private DoctorAvailabilityRepository doctorAvailabilityRepository;
 //
 ////    @GetMapping("/availabilities/{doctorId}")
-////    public String homePage(@PathVariable(value = "doctorId")long id, Model model) throws RecordNotFoundException {
+////    public String homePage(@PathVariable(value = "doctorId")Long id, Model model) throws RecordNotFoundException {
 ////        List<DoctorAvailability> availabilityList = doctorAvailabilityRepository.findAllById(id);
 ////        model.addAttribute("allPatients", patientList);
 ////        return "availabilities-index";

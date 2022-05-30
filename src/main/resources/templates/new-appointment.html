@@ -20,54 +20,44 @@
 <!-- Top container -->
 <div class="w3-bar w3-top w3-black w3-large" style="z-index:4">
     <button class="w3-bar-item w3-button w3-hide-large w3-hover-none w3-hover-text-light-grey" onclick="w3_open();"><i class="fa fa-bars"></i>  Menu</button>
+    <span class="w3-bar-item w3-left"><a th:href="@{/}" class="btn btn-primary btn-sm mb-3">Back to Home</a></span>
     <span class="w3-bar-item w3-right">Logo</span>
 </div>
 
 <!-- !PAGE CONTENT! -->
 <div class="w3-main" style="text-align: center;margin-top:43px;">
+
     <div class="container" align="center">
         <h1 class="pt-3"> Patient Health System</h1>
         <hr>
         <h2>Create New Appointment</h2>
-        <form th:action="@{/saveAppointment}" th:object="${appointment}" method="post">
+        <form th:action="@{/appointments/save}" th:object="${appointment}" method="post">
 
-            <select name="procedure" class="form-control mb-4 col-4">
-                <option th:each="procedure : ${T(MFD.HealthManagementSystem.model.Procedure).values()}"
-                        th:value="${procedure}" th:text="${procedure.displayName()}"></option>
-            </select>
+            <input type="hidden" th:field="*{patient}" th:value="${appointment.patient}"/>
 
-            <select th:field="*{doctor}" class="form-control mb-4 col-4">
-                <option th:each="doctor: ${allDoctors}"
-                        th:value="${doctor}"
-                        th:text="${doctor.firstName + ' ' + doctor.lastName}">Doctor</option>
-            </select>
+                <select class="form-control mb-4 col-4" id="procedure" name="procedure">
+                    <option th:each="procedure : ${T(MFD.HealthManagementSystem.model.Procedure).values()}"
+                            th:value="${procedure.displayName}"
+                            th:text="${procedure.displayName}"
+                            th:selected="${procedure.displayName}"></option>
+                </select>
 
-<!--            <input type="text" th:field="*{first_name}" placeholder="Enter first name" class="form-control mb-4 col-4"/>-->
-<!--            <p th:if="${#fields.hasErrors('first_name')}" th:errorclass="error" th:errors="*{first_name}"></p>-->
+                <select class="form-control mb-4 col-4" id="doctor" name="doctor" th:field="*{doctor}" >
+                    <option th:each="doctor : ${allDoctors}"
+                            th:value="${doctor.id}"
+                            th:text="${doctor.firstName + ' ' + doctor.lastName}">
+                    </option>
+                </select>
 
-<!--            <input type="text" th:field="*{last_name}" placeholder="Enter last name" class="form-control mb-4 col-4">-->
-<!--            <p th:if="${#fields.hasErrors('last_name')}" th:errorclass="error" th:errors="*{last_name}"></p>-->
+            <input type="date" th:field="*{appointmentDate}" placeholder="Select Date of Appointment" class="form-control mb-4 col-4"/>
+            <p th:if="${#fields.hasErrors('appointmentDate')}" th:errorclass="error" th:errors="*{appointmentDate}"></p>
 
-<!--            <input type="number" th:field="*{id}" placeholder="Enter Health Insurance Number" class="form-control mb-4 col-4"/>-->
-<!--            <p th:if="${#fields.hasErrors('id')}" th:errorclass="error" th:errors="*{id}"></p>-->
-
-<!--            <input type="date" th:field="*{health_card_expiration_date}" placeholder="Enter Card Expiration" class="form-control mb-4 col-4">-->
-<!--            <p th:if="${#fields.hasErrors('health_card_expiration_date')}" th:errorclass="error" th:errors="*{health_card_expiration_date}"></p>-->
-
-<!--            <input type="text" th:field="*{address}" placeholder="Enter address" class="form-control mb-4 col-4">-->
-<!--            <p th:if="${#fields.hasErrors('address')}" th:errorclass="error" th:errors="*{address}"></p>-->
-
-<!--            <input type="date" th:field="*{year_of_birth}" placeholder="Enter birth date" class="form-control mb-4 col-4">-->
-<!--            <p th:if="${#fields.hasErrors('year_of_birth')}" th:errorclass="error" th:errors="*{year_of_birth}"></p>-->
-
-<!--            <input type="email" th:field="*{email}" placeholder="Enter email" class="form-control mb-4 col-4">-->
-<!--            <p th:if="${#fields.hasErrors('email')}" th:errorclass="error" th:errors="*{email}"></p>-->
-
-<!--            <input type="text" th:field="*{cellphone}" placeholder="Enter phone number" class="form-control mb-4 col-4">-->
-<!--            <p th:if="${#fields.hasErrors('cellphone')}" th:errorclass="error" th:errors="*{cellphone}"></p>-->
-
-<!--            <input type="text" th:field="*{family_doctor}" placeholder="Enter family doctor" class="form-control mb-4 col-4">-->
-<!--            <p th:if="${#fields.hasErrors('family_doctor')}" th:errorclass="error" th:errors="*{family_doctor}"></p>-->
+                <select class="form-control mb-4 col-4" id="timeSlot" name="timeSlot">
+                    <option th:each="timeSlot : ${T(MFD.HealthManagementSystem.model.TimeSlot).values()}"
+                            th:value="${timeSlot.startTime}"
+                            th:text="${timeSlot.startTime}"
+                            th:selected="${timeSlot.startTime}"></option>
+                </select>
 
             <button type="submit" class="btn btn-info col-2">Save Appointment</button>
         </form>

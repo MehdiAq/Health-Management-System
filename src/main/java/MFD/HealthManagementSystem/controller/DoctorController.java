@@ -65,7 +65,7 @@ public class DoctorController {
     }
 
     @GetMapping("/doctors/delete/{id}")
-    public String deleteDoctorWithId(@PathVariable(value = "id") long id){
+    public String deleteDoctorWithId(@PathVariable(value = "id") Long id){
         doctorService.deleteDoctor(id);
         return "redirect:/doctors";
     }

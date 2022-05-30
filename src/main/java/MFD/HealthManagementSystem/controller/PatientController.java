@@ -51,7 +51,7 @@ public class PatientController {
         return "dashboard";
     }
 
-    @PostMapping("/save")
+    @PostMapping("/patients/save")
     public String savePatient(@Valid @ModelAttribute("patient") Patient savePatient, BindingResult result){
         if (result.hasErrors()){
             return "new-patient";
@@ -61,7 +61,7 @@ public class PatientController {
         return "redirect:/";
     }
 
-    @GetMapping("/updateForm/{id}")
+    @GetMapping("/updatePatient/{id}")
     public String updateForm(@PathVariable(value = "id") Long id, Model model) throws RecordNotFoundException {
         Patient dbPatient = patientService.getPatientById(id);
         model.addAttribute("patient", dbPatient);
@@ -69,7 +69,7 @@ public class PatientController {
     }
 
     @GetMapping("/deletePatient/{id}")
-    public String deleteWithId(@PathVariable(value = "id") long id){
+    public String deleteWithId(@PathVariable(value = "id") Long id){
         patientService.deletePatient(id);
         return "redirect:/";
     }

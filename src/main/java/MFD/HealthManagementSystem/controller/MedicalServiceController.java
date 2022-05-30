@@ -13,74 +13,74 @@ import java.sql.Date;
 import java.util.*;
 
 @Controller
-public class MedicalServiceHistoryController {
+public class MedicalServiceController {
 
-    private final MedicalServiceHistoryService medicalServiceHistoryService;
+    private final MedicalServiceService medicalServiceService;
 
-    public MedicalServiceHistoryController(MedicalServiceHistoryService medicalServiceHistoryService) {
-        this.medicalServiceHistoryService = medicalServiceHistoryService;
+    public MedicalServiceController(MedicalServiceService medicalServiceService) {
+        this.medicalServiceService = medicalServiceService;
     }
 
     @GetMapping("/serviceHistory/list")
     public String viewMedServices(Model model){
-        List<MedicalServiceHistory> medicalServiceHistories = medicalServiceHistoryService.getMedicalServiceHistoryList();
+        List<MedicalService> medicalServiceHistories = medicalServiceService.getMedicalServiceHistoryList();
         model.addAttribute("medHistories", medicalServiceHistories);
-        return "service-histories";
+        return "medical-service-history";
     }
 
     @GetMapping("/serviceHistory/patient/{patientInsurance}/list")
-    public String viewMedServicesByPatient(@PathVariable(value = "patientInsurance")long healthInsuranceNumber, Model model) throws RecordNotFoundException {
-        List<MedicalServiceHistory> medicalServiceHistories = medicalServiceHistoryService.getPatientMedicalServiceHistoryServiceList(healthInsuranceNumber);
+    public String viewMedServicesByPatient(@PathVariable(value = "patientInsurance")Long healthInsuranceNumber, Model model) throws RecordNotFoundException {
+        List<MedicalService> medicalServiceHistories = medicalServiceService.getPatientMedicalServiceHistoryServiceList(healthInsuranceNumber);
         model.addAttribute("medHistories", medicalServiceHistories);
-        return "service-histories";
+        return "medical-service-history";
     }
 
     @GetMapping("/serviceHistory/doctor/{doctorId}/list")
-    public String viewMedServicesByDoctor(@PathVariable(value = "doctorId")long id, Model model) throws RecordNotFoundException {
-        List<MedicalServiceHistory> medicalServiceHistories = medicalServiceHistoryService.getDoctorMedicalServiceHistoryServiceList(id);
+    public String viewMedServicesByDoctor(@PathVariable(value = "doctorId")Long id, Model model) throws RecordNotFoundException {
+        List<MedicalService> medicalServiceHistories = medicalServiceService.getDoctorMedicalServiceHistoryServiceList(id);
         model.addAttribute("medHistories", medicalServiceHistories);
-        return "service-histories";
+        return "medical-service-history";
     }
 
     @GetMapping("/serviceHistory/service/{serviceName}/list")
     public String viewMedServicesByServiceName(@PathVariable(value = "serviceName")String name, Model model) throws RecordNotFoundException {
-        List<MedicalServiceHistory> medicalServiceHistories = medicalServiceHistoryService.getServiceMedicalServiceHistoryServiceList(name);
+        List<MedicalService> medicalServiceHistories = medicalServiceService.getServiceMedicalServiceHistoryServiceList(name);
         model.addAttribute("medHistories", medicalServiceHistories);
-        return "service-histories";
+        return "medical-service-history";
     }
     @GetMapping("/serviceHistory/date/{date}/list")
     public String viewMedServicesByDate(@PathVariable(value = "date")Date date, Model model) throws RecordNotFoundException {
-        List<MedicalServiceHistory> medicalServiceHistories = medicalServiceHistoryService.getMedicalServiceHistoryServiceListForDate(date);
+        List<MedicalService> medicalServiceHistories = medicalServiceService.getMedicalServiceHistoryServiceListForDate(date);
         model.addAttribute("medHistories", medicalServiceHistories);
-        return "service-histories";
+        return "medical-service-history";
     }
 
     @GetMapping("/serviceHistory/new")
     public String addNewMedService(Model model){
-        MedicalServiceHistory medicalServiceHistory = new MedicalServiceHistory();
-        model.addAttribute("medicalServiceHistory", medicalServiceHistory);
+        MedicalService medicalService = new MedicalService();
+        model.addAttribute("medicalServiceHistory", medicalService);
         return "new-service-history";
     }
 
     @PostMapping("/serviceHistory/save")
-    public String saveMedService(@Valid @ModelAttribute("medicalServiceHistory") MedicalServiceHistory saveService, BindingResult result){
+    public String saveMedService(@Valid @ModelAttribute("medicalServiceHistory") MedicalService saveService, BindingResult result){
         if (result.hasErrors()){
             return "new-service-history";
         }
-        medicalServiceHistoryService.saveOrUpdateMedService(saveService);
+        medicalServiceService.saveOrUpdateMedService(saveService);
         return "redirect:/serviceHistory/list";
     }
 
     @GetMapping("/serviceHistory/update/{insuranceNumber}/{serviceName}/{date}")
     public String updateMedService(@PathVariable(value = "insuranceNumber") Long healthInsuranceNumber, @PathVariable(value = "serviceName")String serviceName, @PathVariable(value = "date") java.sql.Date date, Model model) throws RecordNotFoundException, RecordAlreadyExistsException {
-        MedicalServiceHistory dbMedicalServiceHistory = medicalServiceHistoryService.getMedicalServiceHistory(healthInsuranceNumber, serviceName, date);
-        model.addAttribute("medicalServiceHistory", dbMedicalServiceHistory);
-        return "update-service-history";
+        MedicalService dbMedicalService = medicalServiceService.getMedicalServiceHistory(healthInsuranceNumber, serviceName, date);
+        model.addAttribute("medicalServiceHistory", dbMedicalService);
+        return "update-medical-service";
     }
 
     @GetMapping("/serviceHistory/delete/{insuranceNumber}/{serviceName}/{date}")
     public String deleteMedService(@PathVariable(value = "insuranceNumber") Long healthInsuranceNumber , @PathVariable(value = "serviceName")String serviceName, @PathVariable(value = "date") java.sql.Date date) throws RecordNotFoundException{
-        medicalServiceHistoryService.deleteServiceHistoryByPatientAndServiceAndDate(healthInsuranceNumber, serviceName, date);
-        return "redirect:/service-histories";
+        medicalServiceService.deleteServiceHistoryByPatientAndServiceAndDate(healthInsuranceNumber, serviceName, date);
+        return "redirect:/medical-service-history";
     }
 }

@@ -10,45 +10,45 @@ import java.sql.Date;
 import java.util.*;
 
 @Service
-public class PrescriptionHistoryService {
+public class PrescriptionService {
 
-    private final PrescriptionHistoryRepository repository;
+    private final PrescriptionRepository repository;
 
     private final ObjectMapper mapper = new ObjectMapper();
 
-    public PrescriptionHistoryService(PrescriptionHistoryRepository repository) {
+    public PrescriptionService(PrescriptionRepository repository) {
         this.repository = repository;
     }
 
-    public List<PrescriptionHistory> getPrescriptionHistoryList() {
-        List<PrescriptionHistory> fetchData = repository.findAll();
+    public List<Prescription> getPrescriptionHistoryList() {
+        List<Prescription> fetchData = repository.findAll();
         var result = mapper.convertValue(fetchData, List.class);
         return result;
     }
 
 
-    public List<PrescriptionHistory> getPatientPrescriptionHistoryList(long healthInsuranceNumber) throws RecordNotFoundException {
-        if(repository.findPrescriptionHistoriesByPatient_HealthInsuranceNumber(healthInsuranceNumber).isEmpty()){
+    public List<Prescription> getPatientPrescriptionHistoryList(Long healthInsuranceNumber) throws RecordNotFoundException {
+        if(repository.findPrescriptionHistoriesByPatient_Id(healthInsuranceNumber).isEmpty()){
             throw new RecordNotFoundException("No such Prescription History Exists --- Patient Health Insurance Number: " + healthInsuranceNumber);
         }
-        return repository.findPrescriptionHistoriesByPatient_HealthInsuranceNumber(healthInsuranceNumber);
+        return repository.findPrescriptionHistoriesByPatient_Id(healthInsuranceNumber);
     }
 
-    public List<PrescriptionHistory> getPrescriptionHistoryListByMedication(String name) throws RecordNotFoundException {
+    public List<Prescription> getPrescriptionHistoryListByMedication(String name) throws RecordNotFoundException {
         if(repository.findPrescriptionHistoriesByMedicationName(name).isEmpty()){
             throw new RecordNotFoundException("No such Prescription History Exists --- Service Name: " + name);
         }
         return repository.findPrescriptionHistoriesByMedicationName(name);
     }
 
-    public List<PrescriptionHistory> getPrescriptionHistoryListForDate(Date date) throws RecordNotFoundException {
+    public List<Prescription> getPrescriptionHistoryListForDate(Date date) throws RecordNotFoundException {
         if(repository.findPrescriptionHistoriesByDateOfPrescription(date).isEmpty()){
             throw new RecordNotFoundException("No such Prescription History Exists --- Date: " + date);
         }
         return repository.findPrescriptionHistoriesByDateOfPrescription(date);
     }
 
-    public void savePrescriptionHistory(PrescriptionHistory saveService) {
+    public void savePrescriptionHistory(Prescription saveService) {
         repository.save(saveService);
     }
 }

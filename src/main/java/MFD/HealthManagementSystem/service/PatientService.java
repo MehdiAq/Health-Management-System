@@ -4,7 +4,6 @@ import MFD.HealthManagementSystem.exception.*;
 import MFD.HealthManagementSystem.model.*;
 import MFD.HealthManagementSystem.repository.*;
 import com.fasterxml.jackson.databind.*;
-import org.springframework.beans.factory.annotation.*;
 import org.springframework.stereotype.*;
 
 import java.util.*;
@@ -27,7 +26,7 @@ public class PatientService {
         return result;
     }
 
-    public Patient getPatientById(long id) throws RecordNotFoundException {
+    public Patient getPatientById(Long id) throws RecordNotFoundException {
         Optional<Patient> patient =  repository.findById(id);
         if(patient.isPresent()){
             return mapper.convertValue(patient.get(), Patient.class);
@@ -38,15 +37,15 @@ public class PatientService {
     }
 
     public Patient saveOrUpdatePatient(Patient patient){
-        if(patient.getHealthInsuranceNumber() == null){
+        if(patient.getId() == null){
             repository.save(patient);
             return patient;
         }
         else{
-            Optional<Patient> patient1 = repository.findById(patient.getHealthInsuranceNumber());
+            Optional<Patient> patient1 = repository.findById(patient.getId());
             if (patient1.isPresent()) {
                 Patient patient2 = patient1.get();
-                patient2.setHealthInsuranceNumber(patient.getHealthInsuranceNumber());
+                patient2.setId(patient.getId());
                 patient2.setFirstName(patient.getFirstName());
                 patient2.setLastName(patient.getLastName());
                 patient2.setAddress(patient.getAddress());
@@ -66,7 +65,7 @@ public class PatientService {
         }
     }
 
-    public void deletePatient(long patientId) {
+    public void deletePatient(Long patientId) {
         repository.deleteById(patientId);
     }
 }

@@ -19,6 +19,8 @@
 
 <!-- Top container -->
 <div class="w3-bar w3-top w3-black w3-large" style="z-index:4">
+    <span class="w3-bar-item w3-left"><a th:href="@{#}" class="btn btn-primary btn-sm mb-3">You are Home</a></span>
+
     <button class="w3-bar-item w3-button w3-hide-large w3-hover-none w3-hover-text-light-grey" onclick="w3_open();"><i class="fa fa-bars"></i>  Menu</button>
     <span class="w3-bar-item w3-right">Logo</span>
 </div>
@@ -121,15 +123,15 @@
                 <td th:text="${pat.firstName}"></td>
                 <td th:text="${pat.lastName}"></td>
                 <td>
-                    <a th:href="@{/patientDashboard/{id}(id=${pat.healthInsuranceNumber})}" th:text="${pat.healthInsuranceNumber}"></a>
+                    <a th:href="@{/patientDashboard/{id}(id=${pat.id})}" th:text="${pat.id}"></a>
                 </td>
                 <td th:text="${pat.cardExpiration}"></td>
                 <td th:text="${pat.address}"></td>
-                <td th:text="${pat.birthDate}"></td>
+                <td th:text="${#dates.dayOfWeekName(pat.birthDate)} + ', ' + ${#dates.monthName(pat.birthDate)} + ' ' + ${#dates.day(pat.birthDate)} + ', ' + ${#dates.year(pat.birthDate)}"></td>
 
                 <td>
-                    <a th:href="@{/updatePatient/{id}(id=${pat.healthInsuranceNumber})}" class="btn btn-primary m-1">Update</a>
-                    <a th:href="@{/deletePatient/{id}(id=${pat.healthInsuranceNumber})}" class="btn btn-danger m-1">delete</a>
+                    <a th:href="@{/updatePatient/{id}(id=${pat.id})}" class="btn btn-primary m-1">Update</a>
+                    <a th:href="@{/deletePatient/{id}(id=${pat.id})}" class="btn btn-danger m-1">delete</a>
                 </td>
             </tr>
         </table>

@@ -1,7 +1,9 @@
 package MFD.HealthManagementSystem.model;
 
+import com.fasterxml.jackson.annotation.*;
 import lombok.*;
 import org.hibernate.annotations.*;
+import org.springframework.format.annotation.*;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,7 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import java.time.*;
+import java.util.*;
 
 @Entity
 @Table(name="appointments")
@@ -33,14 +35,16 @@ public class Appointment {
     @OnDelete(action = OnDeleteAction.NO_ACTION)
     private Doctor doctor;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "dd MM yyyy")
     @Column(name = "date_of_appointment")
-    private LocalDate appointmentDate;
+    private Date appointmentDate;
 
     @Column(name = "time_of_appointment")
-    private TimeSlot timeSlot;
+    private String timeSlot;
 
     @Column(name = "procedure_name")
-    private Procedure procedure;
+    private String procedure;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "health_insurance_number")
