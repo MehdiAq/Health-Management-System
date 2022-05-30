@@ -37,19 +37,34 @@ public class AppointmentController {
     public String createAppointment(@PathVariable(value = "id") Long id, Model model) throws RecordNotFoundException {
         Appointment appointment = new Appointment();
         Patient dbPatient = patientService.getPatientById(id);
+        appointment.setPatient(dbPatient);
         List<Doctor> allDoctors = doctorRepository.findAll();
+        model.addAttribute("patient", dbPatient);
         model.addAttribute("allDoctors", allDoctors);
         model.addAttribute("appointment", appointment);
         return "new-appointment";
     }
 
-    @PostMapping("/saveAppointment")
-    public String saveAppointment(@Valid @ModelAttribute("appointment") Appointment saveAppointment, BindingResult result){
+    @PostMapping("/saveAppointment/{id}")
+    public String saveAppointment(@Valid @ModelAttribute("appointment") @PathVariable(value = "id") Long id, Appointment saveAppointment, BindingResult result) throws RecordNotFoundException {
         if (result.hasErrors()){
             return "new-appointment";
         }
         appointmentService.saveOrUpdateAppointment(saveAppointment);
 
-        return "redirect:/patientDashboard";
+        return "redirect:/patientDashboard/{id}";
+    }
+
+    @GetMapping("/updateAppointment/{id}")
+    public String updateAppointment(@PathVariable(value = "id") Long id, Model model) throws RecordNotFoundException {
+        Appointment dbAppointment = appointmentService.getAppointmentById(id);
+        model.addAttribute("patient", dbAppointment);
+        return "update-patient";
+    }
+
+    @GetMapping("/deleteAppointment/{id}")
+    public String deleteWithId(@PathVariable(value = "id") long id){
+        patientService.deletePatient(id);
+        return "redirect:/";
     }
 }

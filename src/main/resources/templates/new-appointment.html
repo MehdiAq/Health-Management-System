@@ -29,26 +29,34 @@
         <h1 class="pt-3"> Patient Health System</h1>
         <hr>
         <h2>Create New Appointment</h2>
-        <form th:action="@{/saveAppointment}" th:object="${appointment}" method="post">
+        <form th:action="@{/saveAppointment/{id}(id=${patient.id})}" th:object="${appointment}" method="post">
 
             <select name="procedure" class="form-control mb-4 col-4">
                 <option th:each="procedure : ${T(MFD.HealthManagementSystem.model.Procedure).values()}"
                         th:value="${procedure}" th:text="${procedure.displayName()}"></option>
             </select>
+            <p th:if="${#fields.hasErrors('procedure')}" th:errorclass="error" th:errors="*{procedure}"></p>
 
-            <select th:field="*{doctor}" class="form-control mb-4 col-4">
+            <select name="doctor" th:field="*{doctor}" class="form-control mb-4 col-4">
                 <option th:each="doctor: ${allDoctors}"
-                        th:value="${doctor}"
-                        th:text="${doctor.firstName + ' ' + doctor.lastName}">Doctor</option>
+                        th:value="${doctor.id}"
+                        th:text="${doctor.firstName + ' ' + doctor.lastName}"
+                        th:selected="${doctor.id}">Doctor</option>
             </select>
+            <p th:if="${#fields.hasErrors('doctor')}" th:errorclass="error" th:errors="*{doctor}"></p>
 
             <input type="date" th:field="*{appointmentDate}" placeholder="Select Date of Appointment" class="form-control mb-4 col-4"/>
             <p th:if="${#fields.hasErrors('appointmentDate')}" th:errorclass="error" th:errors="*{appointmentDate}"></p>
 
-            <select class="form-control mb-4 col-4">
+
+            <select th:field="*{timeSlots}" class="form-control mb-4 col-4">
                 <option th:each="timeSlots : ${T(MFD.HealthManagementSystem.model.TimeSlots).values()}"
-                        th:value="${timeSlots}" th:text="${timeSlots.getStartTime()}"></option>
+                        th:value="${timeSlots}" th:text="${timeSlots.getStartTime()}"
+                        th:selected="${timeSlots}"></option>
             </select>
+            <p th:if="${#fields.hasErrors('timeSlots')}" th:errorclass="error" th:errors="*{timeSlots}"></p>
+
+            <input type="hidden" th:value="${patient}" th:field="*{patient}">
 
             <button type="submit" class="btn btn-info col-2">Save Appointment</button>
         </form>

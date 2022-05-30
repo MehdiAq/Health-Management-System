@@ -24,7 +24,7 @@ public class PrescriptionHistory implements Serializable {
 
     @Id
     @Column(name = "medication_id")
-    private Long medicationId;
+    private Long medicationName;
 
     @Id
     @Column(name = "date_of_prescription")
