@@ -46,7 +46,7 @@
         <a th:href="@{#}" class="w3-bar-item w3-button w3-padding">Appointments</a>
         <a th:href="@{#}" class="w3-bar-item w3-button w3-padding">Medication</a>
         <a th:href="@{#}" class="w3-bar-item w3-button w3-padding">Medical Procedures</a>
-        <a th:href="@{#}" class="w3-bar-item w3-button w3-padding">Profiles</a>
+        <a th:href="@{/}" class="w3-bar-item w3-button w3-padding">Profiles</a>
     </div>
 </nav>
 
@@ -60,12 +60,12 @@
     </header>
 
     <div class="w3-row-padding w3-margin-bottom mb-3">
-        <a th:href="@{#}">
+        <a th:href="@{/}">
             <div class="w3-quarter">
                 <div class="w3-container w3-red w3-padding-16">
                     <div class="w3-left"><i class="fa fa-comment w3-xxxlarge"></i></div>
                     <div class="w3-right">
-                        <h3></h3>
+                        <h3 th:text="${appointments.size()}"></h3>
                     </div>
                     <div class="w3-clear"></div>
                     <h4>Appointments</h4>
@@ -77,7 +77,7 @@
                 <a th:href="@{#}">
                     <div class="w3-left"><i class="fa fa-eye w3-xxxlarge"></i></div>
                     <div class="w3-right">
-                        <h3></h3>
+                        <h3 th:text="${numberOfServices}"></h3>
                     </div>
                     <div class="w3-clear"></div>
                     <h4>Medication</h4>
@@ -89,7 +89,7 @@
                 <a th:href="@{#}">
                     <div class="w3-left"><i class="fa fa-share-alt w3-xxxlarge"></i></div>
                     <div class="w3-right">
-                        <h3></h3>
+                        <h3 th:text="${numberOfProcedures}"></h3>
                     </div>
                     <div class="w3-clear"></div>
                     <h4>Medical Procedures</h4>
@@ -100,7 +100,7 @@
             <div class="w3-container w3-orange w3-text-white w3-padding-16">
                     <div class="w3-left"><i class="fa fa-users w3-xxxlarge"></i></div>
                     <div class="w3-right">
-                        <h3></h3>
+                        <h3 th:text="${allPatients.size()}"></h3>
                     </div>
                     <div class="w3-clear"></div>
                     <h4>Profile</h4>

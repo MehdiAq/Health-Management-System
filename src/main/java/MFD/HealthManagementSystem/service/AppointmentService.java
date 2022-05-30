@@ -62,12 +62,6 @@ public class AppointmentService {
             }
             repository.save(appointment);
             medRepository.save(new MedicalService(appointment.getPatient(), appointment.getProcedure(), appointment.getAppointmentDate(), appointment.getDoctor()));
-//                MedicalService toSave = new MedicalService();
-//                toSave.setPatient(appointment.getPatient());
-//                toSave.setServiceName(appointment.getProcedure());
-//                toSave.setServiceDate(appointment.getAppointmentDate());
-//                toSave.setDoctor(appointment.getDoctor());
-//            medRepository.save(toSave);
             return appointment;
         }
         else{

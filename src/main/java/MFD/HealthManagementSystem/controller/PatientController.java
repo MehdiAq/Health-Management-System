@@ -29,12 +29,11 @@ public class PatientController {
         this.medicalService = medicalService;
     }
 
-    @GetMapping("/")
-    public String viewHomePage(Model model){
-        List<Patient> patientList = patientService.getPatientList();
-        model.addAttribute("allPatients", patientList);
-        return "index";
-    }
+//    @GetMapping("/")
+//    public String viewHomePage(Model model){
+//        model.addAttribute("allPatients", patientService.getPatientList());
+//        return "index";
+//    }
 
 
     @GetMapping("/addNewPatient")
