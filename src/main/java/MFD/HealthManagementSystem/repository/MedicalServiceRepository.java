@@ -10,8 +10,8 @@ import java.util.List;
 
 @Repository
 public interface MedicalServiceRepository extends JpaRepository<MedicalService, MedicalServiceId> {
-    void deleteMedicalServiceHistoryByPatientAndServiceNameAndServiceDate(Patient patient, String serviceName, Date date);
-    MedicalService findByPatientAndServiceNameAndServiceDate(Patient patient, String serviceName, Date date);
+    void deleteMedicalServiceHistoryByPatient_IdAndServiceNameAndServiceDate(Long id, String serviceName, Date date);
+    MedicalService findByPatient_IdAndServiceNameAndServiceDate(Long id, String serviceName, Date date);
     List<MedicalService> findMedicalServicesByPatient_Id(Long healthInsuranceNumber);
     List<MedicalService> findMedicalServicesByDoctor_Id(Long doctorId);
     List<MedicalService> findMedicalServicesByServiceName(String serviceName);

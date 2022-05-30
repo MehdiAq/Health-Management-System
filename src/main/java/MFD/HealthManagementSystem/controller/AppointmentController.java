@@ -4,13 +4,11 @@ import MFD.HealthManagementSystem.exception.*;
 import MFD.HealthManagementSystem.model.*;
 import MFD.HealthManagementSystem.repository.*;
 import MFD.HealthManagementSystem.service.*;
-import org.springframework.beans.factory.annotation.*;
 import org.springframework.stereotype.*;
 import org.springframework.ui.*;
 import org.springframework.validation.*;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.*;
 import java.util.*;
 
 @Controller
@@ -22,10 +20,13 @@ public class AppointmentController {
     
     private final PatientService patientService;
 
-    public AppointmentController(DoctorRepository doctorRepository, AppointmentService appointmentService, PatientService patientService) {
+    private final MedicalServiceRepository medicalServiceRepository;
+
+    public AppointmentController(DoctorRepository doctorRepository, AppointmentService appointmentService, PatientService patientService, MedicalServiceRepository medicalServiceRepository) {
         this.doctorRepository = doctorRepository;
         this.appointmentService = appointmentService;
         this.patientService = patientService;
+        this.medicalServiceRepository = medicalServiceRepository;
     }
 
     @GetMapping("/appointments/list")
@@ -78,11 +79,13 @@ public class AppointmentController {
     }
 
     @PostMapping("/appointments/save/{patId}/{id}")
-    public String saveUpdatedAppointment(@ModelAttribute("appointment") Appointment saveAppointment, BindingResult result) throws RecordAlreadyExistsException{
+    public String saveUpdatedAppointment(@ModelAttribute("medicalService") MedicalService medicalService ,@ModelAttribute("appointment") Appointment saveAppointment, BindingResult result) throws RecordAlreadyExistsException{
         if (result.hasErrors()){
             return "new-appointment";
         }
+
         appointmentService.saveOrUpdateAppointment(saveAppointment);
+        appointmentService.updateMedicalService(medicalService, saveAppointment);
         return "redirect:/patientDashboard/{patId}";
     }
 
@@ -90,15 +93,17 @@ public class AppointmentController {
     public String updateAppointment(@PathVariable(value = "id") Long id, Model model) throws RecordNotFoundException {
         Appointment dbAppointment = appointmentService.getAppointmentById(id);
         List<Doctor> allDoctors = doctorRepository.findAll();
+        MedicalService medicalService = medicalServiceRepository.findByPatient_IdAndServiceNameAndServiceDate(dbAppointment.getPatient().getId(), dbAppointment.getProcedure(), dbAppointment.getAppointmentDate());
 
+        model.addAttribute("medicalService", medicalService);
         model.addAttribute("allDoctors", allDoctors);
         model.addAttribute("appointment", dbAppointment);
         return "update-appointment";
     }
 
-    @GetMapping("/appointments/delete/{patId}/{id}")
-    public String deleteAppointmentWithId(@PathVariable(value = "id") Long id){
-        appointmentService.deleteAppointment(id);
+    @GetMapping("/appointments/delete/{aptId}/{id}")
+    public String deleteAppointmentWithId(@PathVariable(value = "aptId") Long aptId){
+        appointmentService.deleteAppointment(aptId);
         return "redirect:/patientDashboard/{id}";
     }
 }

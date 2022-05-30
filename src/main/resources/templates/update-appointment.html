@@ -58,7 +58,9 @@
                             th:text="${timeSlot.startTime}"
                             th:selected="${timeSlot.startTime}"></option>
                 </select>
-
+            <div th:object="${medicalService}">
+                <input type="hidden" th:value="${medicalService}">
+            </div>
             <button type="submit" class="btn btn-info col-2">Update Appointment</button>
         </form>
     </div>

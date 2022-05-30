@@ -28,12 +28,12 @@ public class MedicalServiceService {
     }
 
     public MedicalService saveOrUpdateMedService(MedicalService history){
-        if(repository.findByPatientAndServiceNameAndServiceDate(history.getPatient(), history.getServiceName(), history.getServiceDate()) == null){
+        if(repository.findByPatient_IdAndServiceNameAndServiceDate(history.getPatient().getId(), history.getServiceName(), history.getServiceDate()) == null){
             repository.save(history);
             return history;
         }
         else{
-            MedicalService history1 = repository.findByPatientAndServiceNameAndServiceDate(history.getPatient(), history.getServiceName(), history.getServiceDate());
+            MedicalService history1 = repository.findByPatient_IdAndServiceNameAndServiceDate(history.getPatient().getId(), history.getServiceName(), history.getServiceDate());
             if (history1 != null) {
                 MedicalService history2 = history1;
                 history2.setPatient(history.getPatient());
@@ -51,19 +51,19 @@ public class MedicalServiceService {
         }
     }
 
-    public void deleteServiceHistoryByPatientAndServiceAndDate(Patient patient, String serviceName, Date date) throws RecordNotFoundException {
-        if(repository.findByPatientAndServiceNameAndServiceDate(patient, serviceName, date) == null){
-            throw new RecordNotFoundException("No such Medical Service History Exists --- Patient Name: " + patient.getFirstName() + ' ' + patient.getLastName() + " --- Service: " + serviceName + " --- Date: " + date);
+    public void deleteServiceHistoryByPatientAndServiceAndDate(Long id, String serviceName, Date date) throws RecordNotFoundException {
+        if(repository.findByPatient_IdAndServiceNameAndServiceDate(id, serviceName, date) == null){
+            throw new RecordNotFoundException("No such Medical Service History Exists --- Patient Health Insurance Number: " + id + " --- Service: " + serviceName + " --- Date: " + date);
         }
-        repository.deleteMedicalServiceHistoryByPatientAndServiceNameAndServiceDate(patient, serviceName, date);
+        repository.deleteMedicalServiceHistoryByPatient_IdAndServiceNameAndServiceDate(id, serviceName, date);
     }
 
 
-    public MedicalService getMedicalServiceHistory(Patient patient, String serviceName, Date date) throws RecordNotFoundException {
-        if(repository.findByPatientAndServiceNameAndServiceDate(patient, serviceName, date) == null){
-            throw new RecordNotFoundException("No such Medical Service History Exists --- Patient Name: " + patient.getFirstName() + ' ' + patient.getLastName() + " --- Service: " + serviceName + " --- Date: " + date);
+    public MedicalService getMedicalServiceHistory(Long id, String serviceName, Date date) throws RecordNotFoundException {
+        if(repository.findByPatient_IdAndServiceNameAndServiceDate(id, serviceName, date) == null){
+            throw new RecordNotFoundException("No such Medical Service History Exists --- Patient Health Insurance Number: " + id + " --- Service: " + serviceName + " --- Date: " + date);
         }
-        return repository.findByPatientAndServiceNameAndServiceDate(patient, serviceName, date);
+        return repository.findByPatient_IdAndServiceNameAndServiceDate(id, serviceName, date);
     }
 
     public List<MedicalService> getPatientMedicalServiceHistoryServiceList(Long healthInsuranceNumber) throws RecordNotFoundException {

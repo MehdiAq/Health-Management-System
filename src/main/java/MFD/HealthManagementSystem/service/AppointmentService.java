@@ -81,14 +81,6 @@ public class AppointmentService {
                 appointment2.setPatient(appointment.getPatient());
                 appointment2.setProcedure(appointment.getProcedure());
                 appointment2 = repository.save(appointment2);
-//                medRepository.save(new MedicalService(appointment2.getPatient(), appointment2.getProcedure(), appointment2.getAppointmentDate(), appointment2.getDoctor()));
-                MedicalService toUpdate = medRepository.findByPatientAndServiceNameAndServiceDate(appointment.getPatient(), appointment.getProcedure(), appointment.getAppointmentDate());
-
-                    toUpdate.setPatient(appointment2.getPatient());
-                    toUpdate.setDoctor(appointment.getDoctor());
-                    toUpdate.setServiceDate(appointment2.getAppointmentDate());
-                    toUpdate.setServiceName(appointment.getProcedure());
-                    medRepository.save(toUpdate);
                 return appointment2;
 
             }
@@ -132,5 +124,16 @@ public class AppointmentService {
             }
         }
         return upComingAppointments;
+    }
+
+    public void updateMedicalService(MedicalService medicalService, Appointment appointment){
+        MedicalService toUpdate = medicalService;
+
+        toUpdate.setPatient(appointment.getPatient());
+        toUpdate.setDoctor(appointment.getDoctor());
+        toUpdate.setServiceDate(appointment.getAppointmentDate());
+        toUpdate.setServiceName(appointment.getProcedure());
+        medRepository.delete(medicalService);
+        medRepository.save(toUpdate);
     }
 }
