@@ -6,8 +6,8 @@ import MFD.HealthManagementSystem.repository.*;
 import com.fasterxml.jackson.databind.*;
 import org.springframework.stereotype.*;
 
-import java.sql.Date;
-import java.util.*;
+import java.util.Date;
+import java.util.List;
 
 @Service
 public class MedicalServiceService {

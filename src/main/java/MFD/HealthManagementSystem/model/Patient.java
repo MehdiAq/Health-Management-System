@@ -8,7 +8,6 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
-import java.sql.Date;
 import java.util.*;
 
 import static MFD.HealthManagementSystem.constant.ErrorMessage.*;

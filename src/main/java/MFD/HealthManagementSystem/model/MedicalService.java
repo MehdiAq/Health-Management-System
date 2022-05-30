@@ -17,7 +17,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class MedicalService {
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @Id
     @JoinColumn(name = "health_insurance_number")
     @OnDelete(action = OnDeleteAction.CASCADE)
@@ -31,7 +31,7 @@ public class MedicalService {
     @Column(name = "date_performed")
     private Date serviceDate;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "doctor_id")
     @OnDelete(action = OnDeleteAction.NO_ACTION)
     private Doctor doctor;

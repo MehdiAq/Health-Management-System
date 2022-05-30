@@ -30,7 +30,7 @@ public class Appointment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "doctor_id")
     @OnDelete(action = OnDeleteAction.NO_ACTION)
     private Doctor doctor;
@@ -46,7 +46,7 @@ public class Appointment {
     @Column(name = "procedure_name")
     private String procedure;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "health_insurance_number")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Patient patient;

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <title>New Appointment</title>
+  <title>Dashboard</title>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
@@ -12,26 +12,105 @@
         integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
         crossorigin="anonymous">
   <style>
-      html, body, h1, h2, h3, h4, h5 {
-          font-family: "Raleway", sans-serif
-      }
+    html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
   </style>
 </head>
 <body class="w3-light-grey">
 
 <!-- Top container -->
 <div class="w3-bar w3-top w3-black w3-large" style="z-index:4">
-  <button class="w3-bar-item w3-button w3-hide-large w3-hover-none w3-hover-text-light-grey" onclick="w3_open();"><i
-          class="fa fa-bars"></i>  Menu
-  </button>
-  <span class="w3-bar-item w3-right">Logo</span>
+  <span class="w3-bar-item w3-left"><a th:href="@{/}" class="btn btn-primary btn-sm mb-3">Back to Home</a></span>
+  <button class="w3-bar-item w3-button w3-hide-large w3-hover-none w3-hover-text-light-grey" onclick="w3_open();"><i class="fa fa-bars"></i>  Menu</button>
+  <span class="w3-bar-item w3-right">MFD - Health Management System</span>
 </div>
 
+<!-- Sidebar/menu -->
+<nav class="w3-sidebar w3-collapse w3-white w3-animate-left" style="z-index:3;width:250px;" id="mySidebar"><br>
+  <div class="w3-container w3-row">
+    <div class="w3-col s4">
+      <!--      <img src="/w3images/avatar2.png" class="w3-circle w3-margin-right" style="width:46px">-->
+    </div>
+    <div class="w3-col s8 w3-bar">
+      <span>Welcome, <strong th:text="${patient.firstName}"></strong></span><br>
+      <a href="#" class="w3-bar-item w3-button"><i class="fa fa-envelope"></i></a>
+      <a href="#" class="w3-bar-item w3-button"><i class="fa fa-user"></i></a>
+      <a href="#" class="w3-bar-item w3-button"><i class="fa fa-cog"></i></a>
+    </div>
+  </div>
+  <hr>
+  <div class="w3-container">
+    <h5>Dashboard</h5>
+  </div>
+  <div class="w3-bar-block">
+    <a href="#" class="w3-bar-item w3-button w3-padding-16 w3-hide-large w3-dark-grey w3-hover-black" onclick="w3_close()" title="close menu"><i class="fa fa-remove fa-fw"></i>  Close Menu</a>
+    <a th:href="@{/patientDashboard/{id}(id=${patient.id})}" class="w3-bar-item w3-button w3-padding">Appointments</a>
+    <a th:href="@{/prescriptionHistory/patient/{patIn}(patIn=${patient.id})}" class="w3-bar-item w3-button w3-padding">Medication</a>
+    <a th:href="@{/serviceHistory/patient/{patIn}(patIn=${patient.id})}" class="w3-bar-item w3-button w3-padding">Medical Procedures</a>
+    <a th:href="@{/}" class="w3-bar-item w3-button w3-padding">Profiles</a>
+  </div>
+</nav>
+
+
 <!-- !PAGE CONTENT! -->
-<div class="w3-main" style="text-align: center;margin-top:43px;">
-  <div class="container" align="center">
-    <h2>Prescription history</h2>
-    <table class="table table-striped">
+<div class="w3-main" style="margin-left:300px;margin-top:43px;">
+
+  <!-- Header -->
+  <header class="w3-container" style="padding-top:22px">
+    <h5><b><i class="fa fa-dashboard"></i> My Dashboard</b></h5>
+  </header>
+
+  <div class="w3-row-padding w3-margin-bottom mb-3">
+    <a th:href="@{/patientDashboard/{id}(id=${patient.id})}">
+      <div class="w3-quarter">
+        <div class="w3-container w3-red w3-padding-16">
+          <div class="w3-left"><i class="fa fa-comment w3-xxxlarge"></i></div>
+          <div class="w3-right">
+            <h3 th:text="${numberOfAppointments}"></h3>
+          </div>
+          <div class="w3-clear"></div>
+          <h4>Appointments</h4>
+        </div>
+      </div>
+    </a>
+    <div class="w3-quarter">
+      <div class="w3-container w3-lime w3-padding-16">
+          <div class="w3-left"><i class="fa fa-eye w3-xxxlarge"></i></div>
+          <div class="w3-right">
+            <h3 th:text="${numberOfServices}"></h3>
+          </div>
+          <div class="w3-clear"></div>
+          <h4>Medication</h4>
+      </div>
+    </div>
+    <div class="w3-quarter">
+      <div class="w3-container w3-pale-red w3-padding-16">
+        <a th:href="@{/serviceHistory/patient/{patIn}(patIn=${patient.id})}">
+          <div class="w3-left"><i class="fa fa-share-alt w3-xxxlarge"></i></div>
+          <div class="w3-right">
+            <h3 th:text="${numberOfProcedures}"></h3>
+          </div>
+          <div class="w3-clear"></div>
+          <h4>Medical Procedures</h4>
+        </a>
+      </div>
+    </div>
+    <div class="w3-quarter">
+      <div class="w3-container w3-orange w3-text-white w3-padding-16">
+        <a th:href="@{/}">
+          <div class="w3-left"><i class="fa fa-users w3-xxxlarge"></i></div>
+          <div class="w3-right">
+            <h3 th:text="${numberOfProfiles}"></h3>
+          </div>
+          <div class="w3-clear"></div>
+          <h4>Profile</h4>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="w3-container my-5">
+    <h4>Prescription history</h4>
+    <table class="table table-striped table-responsive-md my-3">
       <thead>
       <tr>
         <th>Medication</th>
@@ -43,11 +122,37 @@
       <tr th:each="prescription: ${prescriptions}">
         <td th:text="${prescription.medicationName}"></td>
         <td th:text="${prescription.prescriptionQty}"></td>
-        <td th:text="${prescription.dateOfPrescription}"></td>
+        <td th:text="${#dates.dayOfWeekName(prescription.dateOfPrescription)} + ', ' + ${#dates.monthName(prescription.dateOfPrescription)} + ' ' + ${#dates.day(prescription.dateOfPrescription)} + ', ' + ${#dates.year(prescription.dateOfPrescription)}">
       </tr>
       </tbody>
     </table>
   </div>
 </div>
+
+<script>
+    // Get the Sidebar
+    var mySidebar = document.getElementById("mySidebar");
+
+    // Get the DIV with overlay effect
+    var overlayBg = document.getElementById("myOverlay");
+
+    // Toggle between showing and hiding the sidebar, and add overlay effect
+    function w3_open() {
+        if (mySidebar.style.display === 'block') {
+            mySidebar.style.display = 'none';
+            overlayBg.style.display = "none";
+        } else {
+            mySidebar.style.display = 'block';
+            overlayBg.style.display = "block";
+        }
+    }
+
+    // Close the sidebar with the close button
+    function w3_close() {
+        mySidebar.style.display = "none";
+        overlayBg.style.display = "none";
+    }
+</script>
+
 </body>
 </html>

@@ -8,9 +8,9 @@ import org.springframework.ui.*;
 import org.springframework.validation.*;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.*;
-import java.sql.Date;
-import java.util.*;
+import javax.validation.Valid;
+import java.util.Date;
+import java.util.List;
 
 @Controller
 public class MedicalServiceController {
@@ -19,9 +19,12 @@ public class MedicalServiceController {
 
     private final PatientService patientService;
 
-    public MedicalServiceController(MedicalServiceService medicalServiceService, PatientService patientService) {
+    private final AppointmentService appointmentService;
+
+    public MedicalServiceController(MedicalServiceService medicalServiceService, PatientService patientService, AppointmentService appointmentService) {
         this.medicalServiceService = medicalServiceService;
         this.patientService = patientService;
+        this.appointmentService = appointmentService;
     }
 
     @GetMapping("/serviceHistory/list")
@@ -31,10 +34,18 @@ public class MedicalServiceController {
         return "medical-service-history";
     }
 
-    @GetMapping("/serviceHistory/patient/{patientInsurance}/list")
-    public String viewMedServicesByPatient(@PathVariable(value = "patientInsurance")Long healthInsuranceNumber, Model model) throws RecordNotFoundException {
+    @GetMapping("/serviceHistory/patient/{patIn}")
+    public String viewMedServicesByPatient(@PathVariable(value = "patIn")Long healthInsuranceNumber, Model model) throws RecordNotFoundException {
         List<MedicalService> medicalServiceHistories = medicalServiceService.getPatientMedicalServiceHistoryServiceList(healthInsuranceNumber);
-        model.addAttribute("medHistories", medicalServiceHistories);
+        List<Appointment> upComingAppointments = appointmentService.getUpcomingAppointmentById(healthInsuranceNumber);
+
+        model.addAttribute("numberOfServices", medicalServiceService.getPatientMedicalServiceHistoryServiceList(healthInsuranceNumber).size());
+        model.addAttribute("numberOfAppointments", upComingAppointments.size());
+        model.addAttribute("numberOfProfiles", patientService.getPatientList().size());
+        model.addAttribute("numberOfProcedures", appointmentService.getPatientAppointments(healthInsuranceNumber).size());
+        model.addAttribute("appointments", upComingAppointments);
+        model.addAttribute("patient", patientService.getPatientById(healthInsuranceNumber));
+        model.addAttribute("medicalServices", medicalServiceHistories);
         return "medical-service-history";
     }
 
@@ -75,14 +86,14 @@ public class MedicalServiceController {
     }
 
     @GetMapping("/serviceHistory/update/{insuranceNumber}/{serviceName}/{date}")
-    public String updateMedService(@PathVariable(value = "insuranceNumber") Long healthInsuranceNumber, @PathVariable(value = "serviceName")String serviceName, @PathVariable(value = "date") java.sql.Date date, Model model) throws RecordNotFoundException, RecordAlreadyExistsException {
+    public String updateMedService(@PathVariable(value = "insuranceNumber") Long healthInsuranceNumber, @PathVariable(value = "serviceName")String serviceName, @PathVariable(value = "date") Date date, Model model) throws RecordNotFoundException, RecordAlreadyExistsException {
         MedicalService dbMedicalService = medicalServiceService.getMedicalServiceHistory(healthInsuranceNumber, serviceName, date);
         model.addAttribute("medicalServiceHistory", dbMedicalService);
         return "update-medical-service";
     }
 
     @GetMapping("/serviceHistory/delete/{insuranceNumber}/{serviceName}/{date}")
-    public String deleteMedService(@PathVariable(value = "insuranceNumber") Long healthInsuranceNumber , @PathVariable(value = "serviceName")String serviceName, @PathVariable(value = "date") java.sql.Date date) throws RecordNotFoundException{
+    public String deleteMedService(@PathVariable(value = "insuranceNumber") Long healthInsuranceNumber , @PathVariable(value = "serviceName")String serviceName, @PathVariable(value = "date") Date date) throws RecordNotFoundException{
         medicalServiceService.deleteServiceHistoryByPatientAndServiceAndDate(healthInsuranceNumber, serviceName, date);
         return "redirect:/medical-service-history";
     }

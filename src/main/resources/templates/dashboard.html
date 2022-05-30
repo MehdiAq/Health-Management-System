@@ -21,7 +21,7 @@
 <div class="w3-bar w3-top w3-black w3-large" style="z-index:4">
     <span class="w3-bar-item w3-left"><a th:href="@{/}" class="btn btn-primary btn-sm mb-3">Back to Home</a></span>
     <button class="w3-bar-item w3-button w3-hide-large w3-hover-none w3-hover-text-light-grey" onclick="w3_open();"><i class="fa fa-bars"></i>  Menu</button>
-    <span class="w3-bar-item w3-right">Logo</span>
+    <span class="w3-bar-item w3-right">MFD - Health Management System</span>
 </div>
 
 <!-- Sidebar/menu -->
@@ -43,10 +43,10 @@
     </div>
     <div class="w3-bar-block">
         <a href="#" class="w3-bar-item w3-button w3-padding-16 w3-hide-large w3-dark-grey w3-hover-black" onclick="w3_close()" title="close menu"><i class="fa fa-remove fa-fw"></i>  Close Menu</a>
-        <a href="#" class="w3-bar-item w3-button w3-padding w3-blue">  Appointments</a>
-        <a href="#" class="w3-bar-item w3-button w3-padding">  Medication</a>
-        <a href="#" class="w3-bar-item w3-button w3-padding">  Medical Procedures</a>
-        <a href="#" class="w3-bar-item w3-button w3-padding">  Profile</a>
+        <a th:href="@{/patientDashboard/{id}(id=${patient.id})}" class="w3-bar-item w3-button w3-padding">Appointments</a>
+        <a th:href="@{/prescriptionHistory/patient/{patIn}(patIn=${patient.id})}" class="w3-bar-item w3-button w3-padding">Medication</a>
+        <a th:href="@{/serviceHistory/patient/{patIn}(patIn=${patient.id})}" class="w3-bar-item w3-button w3-padding">Medical Procedures</a>
+        <a th:href="@{/}" class="w3-bar-item w3-button w3-padding">Profiles</a>
     </div>
 </nav>
 
@@ -60,46 +60,50 @@
     </header>
 
     <div class="w3-row-padding w3-margin-bottom mb-3">
-        <a th:href="@{/addNewPatient}">
-            <div class="w3-quarter">
+        <div class="w3-quarter">
                 <div class="w3-container w3-red w3-padding-16">
                     <div class="w3-left"><i class="fa fa-comment w3-xxxlarge"></i></div>
                     <div class="w3-right">
-                        <h3>52</h3>
+                        <h3 th:text="${numberOfAppointments}"></h3>
                     </div>
                     <div class="w3-clear"></div>
                     <h4>Appointments</h4>
                 </div>
             </div>
-        </a>
         <div class="w3-quarter">
-            <div class="w3-container w3-blue w3-padding-16">
+            <div class="w3-container w3-lime w3-padding-16">
+                <a th:href="@{/prescriptionHistory/patient/{patIn}(patIn=${patient.id})}">
                 <div class="w3-left"><i class="fa fa-eye w3-xxxlarge"></i></div>
                 <div class="w3-right">
-                    <h3>99</h3>
+                    <h3 th:text="${numberOfServices}"></h3>
                 </div>
                 <div class="w3-clear"></div>
                 <h4>Medication</h4>
+                </a>
             </div>
         </div>
         <div class="w3-quarter">
-            <div class="w3-container w3-teal w3-padding-16">
+            <div class="w3-container w3-pale-red w3-padding-16">
+                <a th:href="@{/serviceHistory/patient/{patIn}(patIn=${patient.id})}">
                 <div class="w3-left"><i class="fa fa-share-alt w3-xxxlarge"></i></div>
                 <div class="w3-right">
-                    <h3>23</h3>
+                    <h3 th:text="${numberOfProcedures}"></h3>
                 </div>
                 <div class="w3-clear"></div>
                 <h4>Medical Procedures</h4>
+                </a>
             </div>
         </div>
         <div class="w3-quarter">
             <div class="w3-container w3-orange w3-text-white w3-padding-16">
+                <a th:href="@{/}">
                 <div class="w3-left"><i class="fa fa-users w3-xxxlarge"></i></div>
                 <div class="w3-right">
-                    <h3>50</h3>
+                    <h3 th:text="${numberOfProfiles}"></h3>
                 </div>
                 <div class="w3-clear"></div>
                 <h4>Profile</h4>
+                </a>
             </div>
         </div>
     </div>

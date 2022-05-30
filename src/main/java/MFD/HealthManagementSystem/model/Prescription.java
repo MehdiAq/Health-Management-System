@@ -18,7 +18,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Prescription {
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @Id
     @JoinColumn(name = "health_insurance_number")
     @OnDelete(action = OnDeleteAction.CASCADE)

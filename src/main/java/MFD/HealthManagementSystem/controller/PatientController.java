@@ -19,11 +19,14 @@ public class PatientController {
 
     private final AppointmentService appointmentService;
 
+    private final MedicalServiceService medicalService;
+
     private final ObjectMapper mapper = new ObjectMapper();
 
-    public PatientController(PatientService patientService, AppointmentService appointmentService) {
+    public PatientController(PatientService patientService, AppointmentService appointmentService, MedicalServiceService medicalService) {
         this.patientService = patientService;
         this.appointmentService = appointmentService;
+        this.medicalService = medicalService;
     }
 
     @GetMapping("/")
@@ -43,10 +46,13 @@ public class PatientController {
 
     @GetMapping("/patientDashboard/{id}")
     public String goToPatientDashboard(@PathVariable(value = "id") Long id, Model model) throws RecordNotFoundException{
-        Patient dbPatient = patientService.getPatientById(id);
         List<Appointment> upComingAppointments = appointmentService.getUpcomingAppointmentById(id);
 
-        model.addAttribute("patient", dbPatient);
+        model.addAttribute("numberOfServices", medicalService.getPatientMedicalServiceHistoryServiceList(id).size());
+        model.addAttribute("numberOfAppointments", upComingAppointments.size());
+        model.addAttribute("numberOfProfiles", patientService.getPatientList().size());
+        model.addAttribute("numberOfProcedures", appointmentService.getPatientAppointments(id).size());
+        model.addAttribute("patient", patientService.getPatientById(id));
         model.addAttribute("appointments", upComingAppointments);
         return "dashboard";
     }

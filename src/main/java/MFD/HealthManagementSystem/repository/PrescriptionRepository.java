@@ -5,7 +5,7 @@ import MFD.HealthManagementSystem.model.id.*;
 import org.springframework.data.jpa.repository.*;
 import org.springframework.stereotype.*;
 
-import java.sql.Date;
+
 import java.util.*;
 
 @Repository
