@@ -1,13 +1,16 @@
 package MFD.HealthManagementSystem.model;
 
 
-import MFD.HealthManagementSystem.model.id.*;
-import lombok.*;
-import org.hibernate.annotations.*;
+import MFD.HealthManagementSystem.model.id.PrescriptionId;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
-import javax.persistence.Entity;
-import javax.persistence.Table;
 import java.util.Date;
 
 @Entity
@@ -29,6 +32,7 @@ public class Prescription {
     private String medicationName;
 
     @Id
+    @Temporal(TemporalType.DATE)
     @Column(name = "date_of_prescription")
     private Date dateOfPrescription;
 

@@ -27,15 +27,14 @@ public class MedicalServiceController {
         this.appointmentService = appointmentService;
     }
 
-    @GetMapping("/")
-    public String viewHome(Model model) throws RecordNotFoundException {
-        model.addAttribute("numberOfServices", medicalServiceService.getMedicalServiceHistoryList().size());
-        model.addAttribute("appointments", appointmentService.getAppointmentList());
-        model.addAttribute("allPatients", patientService.getPatientList());
-        model.addAttribute("numberOfProcedures", medicalServiceService.getMedicalServiceHistoryList().size());
-        model.addAttribute("medicalServices", medicalServiceService.getMedicalServiceHistoryList());
-        return "index";
-    }
+//    @GetMapping("/")
+//    public String viewHome(Model model) throws RecordNotFoundException {
+//        model.addAttribute("numberOfServices", medicalServiceService.getMedicalServiceHistoryList().size());
+//        model.addAttribute("numberOfAppointments", appointmentService.getAppointmentList().size());
+//        model.addAttribute("allPatients", patientService.getPatientList());
+//        model.addAttribute("numberOfProcedures", medicalServiceService.getMedicalServiceHistoryList().size());
+//        return "index";
+//    }
 
     @GetMapping("/serviceHistory/patient/{patIn}")
     public String viewMedServicesByPatient(@PathVariable(value = "patIn")Long healthInsuranceNumber, Model model) throws RecordNotFoundException {

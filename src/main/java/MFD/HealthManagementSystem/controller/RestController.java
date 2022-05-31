@@ -7,8 +7,8 @@ import com.fasterxml.jackson.databind.*;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.*;
-import java.util.*;
+import javax.validation.Valid;
+import java.util.List;
 
 @org.springframework.web.bind.annotation.RestController
 public class RestController {
@@ -21,9 +21,6 @@ public class RestController {
 
     @Autowired
     private AppointmentRepository appointmentRepository;
-
-//    @Autowired
-//    private DoctorAvailabilityRepository doctorAvailabilityRepository;
 
     @Autowired
     private MedicalServiceRepository medicalServiceRepository;

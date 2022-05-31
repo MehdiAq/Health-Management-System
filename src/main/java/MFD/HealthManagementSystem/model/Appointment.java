@@ -1,19 +1,16 @@
 package MFD.HealthManagementSystem.model;
 
 import com.fasterxml.jackson.annotation.*;
-import lombok.*;
-import org.hibernate.annotations.*;
-import org.springframework.format.annotation.*;
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Date;
 
 @Entity
@@ -30,13 +27,14 @@ public class Appointment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     @JoinColumn(name = "doctor_id")
     @OnDelete(action = OnDeleteAction.NO_ACTION)
     private Doctor doctor;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @JsonFormat(pattern = "dd MM yyyy")
+    @JsonFormat(pattern = "dd MMMM yyyy")
+//    @Temporal(TemporalType.DATE)
     @Column(name = "date_of_appointment")
     private Date appointmentDate;
 
@@ -46,7 +44,7 @@ public class Appointment {
     @Column(name = "procedure_name")
     private String procedure;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     @JoinColumn(name = "health_insurance_number")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Patient patient;

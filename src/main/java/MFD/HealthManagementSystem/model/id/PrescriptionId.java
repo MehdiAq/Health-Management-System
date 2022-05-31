@@ -1,9 +1,7 @@
 package MFD.HealthManagementSystem.model.id;
 
-import MFD.HealthManagementSystem.model.*;
-
-import java.io.*;
-import java.util.*;
+import java.io.Serializable;
+import java.util.Date;
 
 
 public class PrescriptionId implements Serializable {

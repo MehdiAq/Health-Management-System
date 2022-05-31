@@ -1,13 +1,19 @@
 package MFD.HealthManagementSystem.service;
 
-import MFD.HealthManagementSystem.exception.*;
-import MFD.HealthManagementSystem.model.*;
-import MFD.HealthManagementSystem.repository.*;
-import com.fasterxml.jackson.databind.*;
-import org.springframework.stereotype.*;
+import MFD.HealthManagementSystem.exception.RecordAlreadyExistsException;
+import MFD.HealthManagementSystem.exception.RecordNotFoundException;
+import MFD.HealthManagementSystem.model.Appointment;
+import MFD.HealthManagementSystem.model.MedicalService;
+import MFD.HealthManagementSystem.repository.AppointmentRepository;
+import MFD.HealthManagementSystem.repository.MedicalServiceRepository;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.stereotype.Service;
 
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class AppointmentService {
@@ -63,8 +69,7 @@ public class AppointmentService {
             repository.save(appointment);
             medRepository.save(new MedicalService(appointment.getPatient(), appointment.getProcedure(), appointment.getAppointmentDate(), appointment.getDoctor()));
             return appointment;
-        }
-        else{
+        } else{
             Optional<Appointment> appointment1 = repository.findById(appointment.getId());
             if (appointment1.isPresent()) {
                 Appointment appointment2 = appointment1.get();
@@ -77,8 +82,7 @@ public class AppointmentService {
                 appointment2 = repository.save(appointment2);
                 return appointment2;
 
-            }
-            else{
+            } else{
                 medRepository.save(new MedicalService(appointment.getPatient(), appointment.getProcedure(), appointment.getAppointmentDate(), appointment.getDoctor()));
                 repository.save(appointment);
                 return appointment;

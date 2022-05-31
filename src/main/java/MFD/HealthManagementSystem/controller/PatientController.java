@@ -10,7 +10,7 @@ import org.springframework.validation.*;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.*;
-import java.util.*;
+import java.util.List;
 
 @Controller
 public class PatientController {
@@ -29,11 +29,11 @@ public class PatientController {
         this.medicalService = medicalService;
     }
 
-//    @GetMapping("/")
-//    public String viewHomePage(Model model){
-//        model.addAttribute("allPatients", patientService.getPatientList());
-//        return "index";
-//    }
+    @GetMapping("/")
+    public String viewHomePage(Model model){
+        model.addAttribute("allPatients", patientService.getPatientList());
+        return "index";
+    }
 
 
     @GetMapping("/addNewPatient")

@@ -6,7 +6,8 @@ import MFD.HealthManagementSystem.repository.*;
 import com.fasterxml.jackson.databind.*;
 import org.springframework.stereotype.*;
 
-import java.util.*;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class DoctorService {

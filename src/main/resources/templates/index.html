@@ -43,10 +43,10 @@
     </div>
     <div class="w3-bar-block">
         <a href="#" class="w3-bar-item w3-button w3-padding-16 w3-hide-large w3-dark-grey w3-hover-black" onclick="w3_close()" title="close menu"><i class="fa fa-remove fa-fw"></i>  Close Menu</a>
-        <a th:href="@{#}" class="w3-bar-item w3-button w3-padding">Appointments</a>
-        <a th:href="@{#}" class="w3-bar-item w3-button w3-padding">Medication</a>
-        <a th:href="@{#}" class="w3-bar-item w3-button w3-padding">Medical Procedures</a>
-        <a th:href="@{/}" class="w3-bar-item w3-button w3-padding">Profiles</a>
+        <a th:action="@{/#}" class="w3-bar-item w3-button w3-padding">Appointments</a>
+        <a th:action="@{/#}" class="w3-bar-item w3-button w3-padding">Medication</a>
+        <a th:action="@{/#}" class="w3-bar-item w3-button w3-padding">Medical Procedures</a>
+        <a th:action="@{/#}" class="w3-bar-item w3-button w3-padding">Profiles</a>
     </div>
 </nav>
 
@@ -60,12 +60,12 @@
     </header>
 
     <div class="w3-row-padding w3-margin-bottom mb-3">
-        <a th:href="@{/}">
+        <a th:href="@{/#}">
             <div class="w3-quarter">
                 <div class="w3-container w3-red w3-padding-16">
                     <div class="w3-left"><i class="fa fa-comment w3-xxxlarge"></i></div>
                     <div class="w3-right">
-                        <h3 th:text="${appointments.size()}"></h3>
+                        <h3></h3>
                     </div>
                     <div class="w3-clear"></div>
                     <h4>Appointments</h4>
@@ -74,10 +74,10 @@
         </a>
         <div class="w3-quarter">
             <div class="w3-container w3-lime w3-padding-16">
-                <a th:href="@{#}">
+                <a th:href="@{/}">
                     <div class="w3-left"><i class="fa fa-eye w3-xxxlarge"></i></div>
                     <div class="w3-right">
-                        <h3 th:text="${numberOfServices}"></h3>
+                        <h3></h3>
                     </div>
                     <div class="w3-clear"></div>
                     <h4>Medication</h4>
@@ -86,10 +86,10 @@
         </div>
         <div class="w3-quarter">
             <div class="w3-container w3-pale-red w3-padding-16">
-                <a th:href="@{#}">
+                <a th:href="@{/}">
                     <div class="w3-left"><i class="fa fa-share-alt w3-xxxlarge"></i></div>
                     <div class="w3-right">
-                        <h3 th:text="${numberOfProcedures}"></h3>
+                        <h3></h3>
                     </div>
                     <div class="w3-clear"></div>
                     <h4>Medical Procedures</h4>
@@ -98,12 +98,14 @@
         </div>
         <div class="w3-quarter">
             <div class="w3-container w3-orange w3-text-white w3-padding-16">
+                <a th:href="@{/}">
                     <div class="w3-left"><i class="fa fa-users w3-xxxlarge"></i></div>
                     <div class="w3-right">
-                        <h3 th:text="${allPatients.size()}"></h3>
+                        <h3></h3>
                     </div>
                     <div class="w3-clear"></div>
                     <h4>Profile</h4>
+                </a>
             </div>
         </div>
     </div>
@@ -122,7 +124,7 @@
                 <th>Birth Date</th>
             </tr>
             </thead>
-            <tr th:each="pat:${allPatients}">
+            <tr th:each="pat : ${allPatients}">
                 <td th:text="${pat.firstName}"></td>
                 <td th:text="${pat.lastName}"></td>
                 <td>
@@ -131,7 +133,8 @@
                 <td th:text="${pat.cardExpiration}"></td>
                 <td th:text="${pat.address}"></td>
                 <td th:text="${#dates.dayOfWeekName(pat.birthDate)} + ', ' + ${#dates.monthName(pat.birthDate)} + ' ' + ${#dates.day(pat.birthDate)} + ', ' + ${#dates.year(pat.birthDate)}"></td>
-
+<!--                <td th:text="${pat.birthDate}"></td>-->
+<!--                <td th:text="${#dates.dayOfWeekName(pat.birthDate)}"></td>-->
                 <td>
                     <a th:href="@{/updatePatient/{id}(id=${pat.id})}" class="btn btn-primary m-1">Update</a>
                     <a th:href="@{/deletePatient/{id}(id=${pat.id})}" class="btn btn-danger m-1">delete</a>

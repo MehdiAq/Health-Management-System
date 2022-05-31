@@ -1,9 +1,9 @@
 package MFD.HealthManagementSystem.repository;
 
-import MFD.HealthManagementSystem.model.*;
-import MFD.HealthManagementSystem.model.id.*;
-import org.springframework.data.jpa.repository.*;
-import org.springframework.stereotype.*;
+import MFD.HealthManagementSystem.model.MedicalService;
+import MFD.HealthManagementSystem.model.id.MedicalServiceId;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.Date;
 import java.util.List;

@@ -3,8 +3,9 @@ package MFD.HealthManagementSystem.repository;
 import MFD.HealthManagementSystem.model.*;
 import org.springframework.data.jpa.repository.*;
 
-import java.time.*;
-import java.util.*;
+
+import java.util.Date;
+import java.util.List;
 
 public interface AppointmentRepository extends JpaRepository<Appointment, Long> {
     List<Appointment> findAllByPatient_Id(Long healthInsuranceNumber);

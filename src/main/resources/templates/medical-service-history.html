@@ -119,10 +119,10 @@
       </tr>
       </thead>
       <tbody>
-      <tr th:each="medicalService: ${medicalServices}">
+      <tr th:each="medicalService : ${medicalServices}">
         <td th:text="${medicalService.serviceName}"></td>
         <td th:text="${#dates.dayOfWeekName(medicalService.serviceDate)} + ', ' + ${#dates.monthName(medicalService.serviceDate)} + ' ' + ${#dates.day(medicalService.serviceDate)} + ', ' + ${#dates.year(medicalService.serviceDate)}">
-        <td th:text="${medicalService.doctor.lastName + ' ' + medicalService.doctor.lastName} "></td>
+        <td th:text="${medicalService.doctor.firstName + ' ' + medicalService.doctor.lastName} "></td>
       </tr>
       </tbody>
     </table>

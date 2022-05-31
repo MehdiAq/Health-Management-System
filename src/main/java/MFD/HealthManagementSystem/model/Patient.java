@@ -1,14 +1,20 @@
 package MFD.HealthManagementSystem.model;
 
 
+import com.fasterxml.jackson.annotation.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.format.annotation.*;
 
 import javax.persistence.*;
-import javax.validation.constraints.*;
-import java.util.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Positive;
+import java.util.Date;
 
 import static MFD.HealthManagementSystem.constant.ErrorMessage.*;
 
@@ -47,6 +53,9 @@ public class Patient {
     private String address;
 
     @NotNull(message = BIRTH_DATE_IS_REQUIRED_ERROR_MESSAGE)
+    @DateTimeFormat(pattern = "yyyy-mm-dd")
+    @JsonFormat(pattern = "yyyy MMMM dd")
+    @Temporal(TemporalType.DATE)
     @Column(name = "birth_date")
     private Date birthDate;
 
