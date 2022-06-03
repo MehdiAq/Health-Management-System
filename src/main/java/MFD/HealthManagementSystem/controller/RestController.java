@@ -1,11 +1,21 @@
 package MFD.HealthManagementSystem.controller;
 
-import MFD.HealthManagementSystem.exception.*;
-import MFD.HealthManagementSystem.model.*;
-import MFD.HealthManagementSystem.repository.*;
-import com.fasterxml.jackson.databind.*;
-import org.springframework.beans.factory.annotation.*;
-import org.springframework.web.bind.annotation.*;
+import MFD.HealthManagementSystem.exception.ResourceNotFoundException;
+import MFD.HealthManagementSystem.model.Appointment;
+import MFD.HealthManagementSystem.model.Doctor;
+import MFD.HealthManagementSystem.model.MedicalService;
+import MFD.HealthManagementSystem.model.Patient;
+import MFD.HealthManagementSystem.model.Prescription;
+import MFD.HealthManagementSystem.repository.AppointmentRepository;
+import MFD.HealthManagementSystem.repository.DoctorRepository;
+import MFD.HealthManagementSystem.repository.MedicalServiceRepository;
+import MFD.HealthManagementSystem.repository.PatientRepository;
+import MFD.HealthManagementSystem.repository.PrescriptionRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -28,9 +38,6 @@ public class RestController {
     @Autowired
     private PrescriptionRepository prescriptionRepository;
 
-    private final ObjectMapper mapper = new ObjectMapper();
-
-
     @PostMapping("/patients")
     public Patient createPatient(@Valid @RequestBody Patient patient){
         return patientRepository.save(patient);
@@ -52,13 +59,6 @@ public class RestController {
         appointment.setDoctor(doctorRepository.findById(doctorId).orElseThrow(()-> new ResourceNotFoundException("Doctor with ID " + doctorId + " not found")));
         return appointmentRepository.save(appointment);
     }
-
-//    @PostMapping("/doctors/{doctor_Id}/createAvailability")
-//    public DoctorAvailability createDocAvail(@PathVariable(value = "doctor_Id") Long doctorId, @RequestBody DoctorAvailability doctorAvailability) {
-//
-//        doctorAvailability.setDoctor(doctorRepository.findById(doctorId).orElseThrow(()-> new ResourceNotFoundException("")));
-//        return doctorAvailabilityRepository.save(doctorAvailability);
-//    }
 
     @PostMapping("/patients/{insuranceNumber}/prescription/")
     public Prescription recordPrescription(@PathVariable(value = "insuranceNumber") Long healthInsuranceNumber, @RequestBody Prescription prescription) {

@@ -1,10 +1,10 @@
 package MFD.HealthManagementSystem.service;
 
-import MFD.HealthManagementSystem.exception.*;
-import MFD.HealthManagementSystem.model.*;
-import MFD.HealthManagementSystem.repository.*;
-import com.fasterxml.jackson.databind.*;
-import org.springframework.stereotype.*;
+import MFD.HealthManagementSystem.exception.RecordNotFoundException;
+import MFD.HealthManagementSystem.model.Doctor;
+import MFD.HealthManagementSystem.repository.DoctorRepository;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
@@ -65,13 +65,6 @@ public class DoctorService {
     public void deleteDoctor(Long doctorId) {
         doctorRepository.deleteById(doctorId);
     }
-
-//    public List<Doctor> getDoctorListByName(String name) throws RecordNotFoundException{
-//        if(doctorRepository.findDoctorsByFirstNameContainsOrLastNameContains(name).isEmpty()) {
-//            throw new RecordNotFoundException("No Doctors with name containing: " + name);
-//        }
-//        return doctorRepository.findDoctorsByFirstNameContainsOrLastNameContains(name);
-//    }
 
     public List<Doctor> getDoctorListBySpecialty(String specialty) throws RecordNotFoundException{
         if(doctorRepository.findDoctorsBySpecialty(specialty).isEmpty()) {

@@ -1,14 +1,19 @@
 package MFD.HealthManagementSystem.model;
 
 
-import com.fasterxml.jackson.annotation.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.format.annotation.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -16,7 +21,17 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Positive;
 import java.util.Date;
 
-import static MFD.HealthManagementSystem.constant.ErrorMessage.*;
+import static MFD.HealthManagementSystem.constant.ErrorMessage.ADDRESS_IS_REQUIRED_ERROR_MESSAGE;
+import static MFD.HealthManagementSystem.constant.ErrorMessage.BIRTH_DATE_IS_REQUIRED_ERROR_MESSAGE;
+import static MFD.HealthManagementSystem.constant.ErrorMessage.CARD_EXPIRATION_IS_REQUIRED_ERROR_MESSAGE;
+import static MFD.HealthManagementSystem.constant.ErrorMessage.EMAIL_IS_REQUIRED_ERROR_MESSAGE;
+import static MFD.HealthManagementSystem.constant.ErrorMessage.FAMILY_DOCTOR_IS_REQUIRED_ERROR_MESSAGE;
+import static MFD.HealthManagementSystem.constant.ErrorMessage.FIRST_NAME_IS_REQUIRED_ERROR_MESSAGE;
+import static MFD.HealthManagementSystem.constant.ErrorMessage.HEALTH_INSURANCE_NUMBER_IS_REQUIRED_ERROR_MESSAGE;
+import static MFD.HealthManagementSystem.constant.ErrorMessage.INVALID_PHONE_NUMBER_ERROR_MESSAGE;
+import static MFD.HealthManagementSystem.constant.ErrorMessage.LAST_NAME_IS_REQUIRED_ERROR_MESSAGE;
+import static MFD.HealthManagementSystem.constant.ErrorMessage.PHONE_NUMBER_IS_REQUIRED_ERROR_MESSAGE;
+import static MFD.HealthManagementSystem.constant.ErrorMessage.VALID_EMAIL_IS_REQUIRED_ERROR_MESSAGE;
 
 @Entity
 @Table(name="patients")
@@ -24,9 +39,9 @@ import static MFD.HealthManagementSystem.constant.ErrorMessage.*;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class Patient {
     @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @NotNull(message = HEALTH_INSURANCE_NUMBER_IS_REQUIRED_ERROR_MESSAGE)
     @Column(name = "health_insurance_number")
     @Positive
@@ -53,8 +68,7 @@ public class Patient {
     private String address;
 
     @NotNull(message = BIRTH_DATE_IS_REQUIRED_ERROR_MESSAGE)
-    @DateTimeFormat(pattern = "yyyy-mm-dd")
-    @JsonFormat(pattern = "yyyy MMMM dd")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Temporal(TemporalType.DATE)
     @Column(name = "birth_date")
     private Date birthDate;

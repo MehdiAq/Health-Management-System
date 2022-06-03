@@ -6,6 +6,7 @@ import MFD.HealthManagementSystem.repository.PrescriptionRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -29,7 +30,8 @@ public class PrescriptionService {
 
     public List<Prescription> getPatientPrescriptionHistoryList(Long healthInsuranceNumber) throws RecordNotFoundException {
         if(repository.findPrescriptionHistoriesByPatient_Id(healthInsuranceNumber).isEmpty()){
-            throw new RecordNotFoundException("No such Prescription History Exists --- Patient Health Insurance Number: " + healthInsuranceNumber);
+//            throw new RecordNotFoundException("No such Prescription History Exists --- Patient Health Insurance Number: " + healthInsuranceNumber);
+            return Collections.emptyList();
         }
         return repository.findPrescriptionHistoriesByPatient_Id(healthInsuranceNumber);
     }

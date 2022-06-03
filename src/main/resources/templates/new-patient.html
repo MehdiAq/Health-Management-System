@@ -32,7 +32,6 @@
         <h2>Save Patient</h2>
         <form th:action="@{/patients/save}" th:object="${patient}" method="post">
 
-
             <input type="text" th:field="*{firstName}" placeholder="Enter first name" class="form-control mb-4 col-4"/>
             <p th:if="${#fields.hasErrors('firstName')}" th:errorclass="error" th:errors="*{firstName}"></p>
 

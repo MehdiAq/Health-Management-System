@@ -48,7 +48,6 @@ public class AppointmentService {
     }
 
     public Appointment getAppointmentById(Long id) throws RecordNotFoundException {
-//        Optional<Appointment> appointment =  repository.findById(id);
         if(repository.findById(id).isPresent()){
             return repository.findById(id).get();
         }
@@ -62,7 +61,8 @@ public class AppointmentService {
             Appointment apt = repository.findAppointmentByDoctorAndAppointmentDateAndTimeSlot(appointment.getDoctor(), appointment.getAppointmentDate(), appointment.getTimeSlot());
             if(apt != null) {
                 if (apt.getProcedure().equals(appointment.getProcedure())) {
-                    throw new RecordAlreadyExistsException("That Timeslot is already booked with that Doctor");
+                    return null;
+//                    throw new RecordAlreadyExistsException("That Timeslot is already booked with that Doctor");
                 }
                 appointment = updateAppointment(apt, appointment);
             }
@@ -108,9 +108,9 @@ public class AppointmentService {
         repository.deleteById(id);
     }
 
-//    public List<Appointment> getAppointmentListByDate(Date date) {
-//        return repository.findAppointmentsByAppointmentDate(date);
-//    }
+    public List<Appointment> getAppointmentListByDate(Date date) {
+        return repository.findAppointmentsByAppointmentDate(date);
+    }
     public List<Appointment> getUpcomingAppointmentById(Long id) {
         List<Appointment> appointments = repository.findAllByPatient_Id(id);
         List<Appointment> upComingAppointments = new ArrayList<>();

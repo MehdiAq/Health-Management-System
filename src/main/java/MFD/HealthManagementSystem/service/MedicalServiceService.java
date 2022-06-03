@@ -6,6 +6,7 @@ import MFD.HealthManagementSystem.repository.MedicalServiceRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -68,7 +69,8 @@ public class MedicalServiceService {
 
     public List<MedicalService> getPatientMedicalServiceHistoryServiceList(Long healthInsuranceNumber) throws RecordNotFoundException {
         if(repository.findMedicalServicesByPatient_Id(healthInsuranceNumber).isEmpty()){
-            throw new RecordNotFoundException("No such Medical Service History Exists --- Patient Health Insurance Number: " + healthInsuranceNumber);
+//            throw new RecordNotFoundException("No such Medical Service History Exists --- Patient Health Insurance Number: " + healthInsuranceNumber);
+            return Collections.emptyList();
         }
         return repository.findMedicalServicesByPatient_Id(healthInsuranceNumber);
     }

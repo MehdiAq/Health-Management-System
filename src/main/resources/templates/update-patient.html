@@ -33,13 +33,13 @@
         <form th:action="@{/patients/save}" th:object="${patient}" method="post">
 
 
-            <input type="text" th:field="*{firstName}" placeholder="Enter first name" class="form-control mb-4 col-4"/>
+            <input type="hidden" th:field="*{firstName}" placeholder="Enter first name" class="form-control mb-4 col-4"/>
             <p th:if="${#fields.hasErrors('firstName')}" th:errorclass="error" th:errors="*{firstName}"></p>
 
-            <input type="text" th:field="*{lastName}" placeholder="Enter last name" class="form-control mb-4 col-4">
+            <input type="hidden" th:field="*{lastName}" placeholder="Enter last name" class="form-control mb-4 col-4">
             <p th:if="${#fields.hasErrors('lastName')}" th:errorclass="error" th:errors="*{lastName}"></p>
 
-            <input type="number" th:field="*{id}" placeholder="Enter Health Insurance Number" class="form-control mb-4 col-4"/>
+            <input type="hidden" th:field="*{id}" placeholder="Enter Health Insurance Number" class="form-control mb-4 col-4"/>
             <p th:if="${#fields.hasErrors('id')}" th:errorclass="error" th:errors="*{id}"></p>
 
             <!--    <input type="text" th:field="*{password}" placeholder="Enter password" class="form-control mb-4 col-4"/>-->
@@ -51,7 +51,7 @@
             <input type="text" th:field="*{address}" placeholder="Enter address" class="form-control mb-4 col-4">
             <p th:if="${#fields.hasErrors('address')}" th:errorclass="error" th:errors="*{address}"></p>
 
-            <input type="date" th:field="*{birthDate}" placeholder="Enter birth date" class="form-control mb-4 col-4">
+            <input type="hidden" th:field="*{birthDate}" placeholder="Enter birth date" class="form-control mb-4 col-4">
             <p th:if="${#fields.hasErrors('birthDate')}" th:errorclass="error" th:errors="*{birthDate}"></p>
 
             <input type="email" th:field="*{email}" placeholder="Enter email" class="form-control mb-4 col-4">

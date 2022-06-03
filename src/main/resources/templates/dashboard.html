@@ -123,7 +123,6 @@
             <tr th:each="apt : ${appointments}">
                 <td th:text="${apt.procedure}"></td>
                 <td th:text="${apt.doctor.firstName + ' ' + apt.doctor.lastName}"></td>
-<!--                <td th:text="${apt.appointmentDate}"></td>-->
                 <td th:text="${#dates.dayOfWeekName(apt.appointmentDate)} + ', ' + ${#dates.monthName(apt.appointmentDate)} + ' ' + ${#dates.day(apt.appointmentDate)} + ', ' + ${#dates.year(apt.appointmentDate)}">
                 <td th:text="${apt.timeSlot}"></td>
                 <td>

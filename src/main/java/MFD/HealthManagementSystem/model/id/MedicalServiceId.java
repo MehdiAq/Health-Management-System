@@ -1,18 +1,13 @@
 package MFD.HealthManagementSystem.model.id;
 
-import MFD.HealthManagementSystem.model.*;
-
 import java.io.Serializable;
 import java.util.Date;
 
 public class MedicalServiceId implements Serializable {
 
-
     private String serviceName;
 
     private Date serviceDate;
-
-
 
     public MedicalServiceId() {
     }

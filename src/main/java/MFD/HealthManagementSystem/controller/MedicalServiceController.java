@@ -1,12 +1,19 @@
 package MFD.HealthManagementSystem.controller;
 
-import MFD.HealthManagementSystem.exception.*;
-import MFD.HealthManagementSystem.model.*;
-import MFD.HealthManagementSystem.service.*;
-import org.springframework.stereotype.*;
-import org.springframework.ui.*;
-import org.springframework.validation.*;
-import org.springframework.web.bind.annotation.*;
+import MFD.HealthManagementSystem.exception.RecordAlreadyExistsException;
+import MFD.HealthManagementSystem.exception.RecordNotFoundException;
+import MFD.HealthManagementSystem.model.Appointment;
+import MFD.HealthManagementSystem.model.MedicalService;
+import MFD.HealthManagementSystem.service.AppointmentService;
+import MFD.HealthManagementSystem.service.MedicalServiceService;
+import MFD.HealthManagementSystem.service.PatientService;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.validation.Valid;
 import java.util.Date;
@@ -26,15 +33,6 @@ public class MedicalServiceController {
         this.patientService = patientService;
         this.appointmentService = appointmentService;
     }
-
-//    @GetMapping("/")
-//    public String viewHome(Model model) throws RecordNotFoundException {
-//        model.addAttribute("numberOfServices", medicalServiceService.getMedicalServiceHistoryList().size());
-//        model.addAttribute("numberOfAppointments", appointmentService.getAppointmentList().size());
-//        model.addAttribute("allPatients", patientService.getPatientList());
-//        model.addAttribute("numberOfProcedures", medicalServiceService.getMedicalServiceHistoryList().size());
-//        return "index";
-//    }
 
     @GetMapping("/serviceHistory/patient/{patIn}")
     public String viewMedServicesByPatient(@PathVariable(value = "patIn")Long healthInsuranceNumber, Model model) throws RecordNotFoundException {

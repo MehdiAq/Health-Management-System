@@ -1,15 +1,24 @@
 package MFD.HealthManagementSystem.controller;
 
-import MFD.HealthManagementSystem.exception.*;
-import MFD.HealthManagementSystem.model.*;
-import MFD.HealthManagementSystem.repository.*;
-import MFD.HealthManagementSystem.service.*;
-import org.springframework.stereotype.*;
-import org.springframework.ui.*;
-import org.springframework.validation.*;
-import org.springframework.web.bind.annotation.*;
+import MFD.HealthManagementSystem.exception.RecordAlreadyExistsException;
+import MFD.HealthManagementSystem.exception.RecordNotFoundException;
+import MFD.HealthManagementSystem.model.Appointment;
+import MFD.HealthManagementSystem.model.Doctor;
+import MFD.HealthManagementSystem.model.MedicalService;
+import MFD.HealthManagementSystem.model.Patient;
+import MFD.HealthManagementSystem.repository.DoctorRepository;
+import MFD.HealthManagementSystem.repository.MedicalServiceRepository;
+import MFD.HealthManagementSystem.service.AppointmentService;
+import MFD.HealthManagementSystem.service.PatientService;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
-import java.util.*;
+import java.util.List;
 
 @Controller
 public class AppointmentController {
@@ -63,28 +72,31 @@ public class AppointmentController {
         Patient dbPatient = patientService.getPatientById(id);
         appointment.setPatient(dbPatient);
         List<Doctor> allDoctors = doctorRepository.findAll();
-//        model.addAttribute("patient", dbPatient);
+
         model.addAttribute("allDoctors", allDoctors);
         model.addAttribute("appointment", appointment);
         return "new-appointment";
     }
 
     @PostMapping("/appointments/save/{patId}")
-    public String saveNewAppointment(@ModelAttribute("appointment") Appointment saveAppointment, BindingResult result) throws RecordAlreadyExistsException{
+    public String saveNewAppointment(@ModelAttribute("appointment") Appointment saveAppointment, Model model, BindingResult result) throws RecordAlreadyExistsException{
         if (result.hasErrors()){
             return "new-appointment";
         }
-        appointmentService.saveOrUpdateAppointment(saveAppointment);
+        if(appointmentService.saveOrUpdateAppointment(saveAppointment) == null){
+            String timeslotUnavailable = "That Timeslot is already booked with that Doctor";
+            model.addAttribute("noTimeSlot", timeslotUnavailable);
+           return "redirect:/newAppointments/{patId}";
+        }
         return "redirect:/patientDashboard/{patId}";
     }
 
     @PostMapping("/appointments/save/{patId}/{id}")
-    public String saveUpdatedAppointment(@ModelAttribute("medicalService") MedicalService medicalService ,@ModelAttribute("appointment") Appointment saveAppointment, BindingResult result) throws RecordAlreadyExistsException{
+    public String saveUpdatedAppointment(@ModelAttribute("medicalService") MedicalService medicalService, @ModelAttribute("appointment") Appointment saveAppointment, BindingResult result) throws RecordAlreadyExistsException{
         if (result.hasErrors()){
             return "new-appointment";
         }
 
-        appointmentService.saveOrUpdateAppointment(saveAppointment);
         appointmentService.updateMedicalService(medicalService, saveAppointment);
         return "redirect:/patientDashboard/{patId}";
     }
